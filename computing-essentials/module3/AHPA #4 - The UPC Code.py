@@ -32,6 +32,7 @@ check_digit_code = UPCCode[11]
 print('{0}\n{1}\n{2}\n{3}'.format(one_digit_code,manufacturers_code,product_code,check_digit_code)) 
 
 #Part 2
-print('Quantity to purchase: {0} \nUnit Cost: ${1} \nTotal Cost: ${2:7,.2f}'.format(quantity,itemCost,total_cost))
+#print out the quantity, itemCost, and total_cost according to the homework guidelines
+print('Quantity to purchase: {0}, Unit Cost: ${1}, Total Cost: ${2:7,.2f}'.format(quantity,itemCost,total_cost))
 
 
