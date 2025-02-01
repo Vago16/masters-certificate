@@ -16,7 +16,6 @@
 cash_withdrawn = int(input('How much money(while loop) do you wish to withdraw from the ATM? '))
 #initialize variable for change
 change_for_hundred_bills = 0
-change_for_twenty_bills = 0
 change_for_ten_bills = 0
 change_for_one_bills = 0
 
@@ -33,31 +32,31 @@ while (cash_withdrawn >= 1):
         cash_withdrawn = cash_withdrawn - cash_withdrawn
 
 
-#since ten and one dollar bills are factors of twenty and five bills respectfully
-#we need to floor divide to get the values for them if they exist, and then change the value of the factors to reflect that
-if (change_for_ten_bills >= 2):                            
-    change_for_twenty_bills = change_for_ten_bills // 2     
-    change_for_ten_bills = change_for_ten_bills - (change_for_twenty_bills * 2) 
-
-
 
 print('Here is your change: {0} hundred dollar bills, {1} ten dollar bills,  {2} one dollar bills'
       .format(change_for_hundred_bills, change_for_ten_bills,change_for_one_bills))
 
-#For loop, cannot figure out for loop for this problem
-'''bills = [100, 20, 10, 5, 1]
+#For loop
+cash_withdrawn_for = int(input('How much money(for loop) do you wish to withdraw from the ATM? '))
 
-'''
+print('Here is your change: ', end = '')
+
+#the +1 is to be inclusivw of the last val of cash_withdrawn_for
+for i in range(cash_withdrawn_for + 1):
+    if (cash_withdrawn_for >= 100):
+        print(cash_withdrawn_for // 100, 'hundred dollar bills', end=' ')
+        cash_withdrawn_for = cash_withdrawn_for % 100
+    elif (cash_withdrawn_for >= 10):
+        print(cash_withdrawn_for // 10, 'ten dollar bills', end=' ')
+        cash_withdrawn_for = cash_withdrawn_for % 10
+    elif(cash_withdrawn_for >= 1):
+        print(cash_withdrawn_for, 'one dollar bills')
+        cash_withdrawn_for = cash_withdrawn_for - cash_withdrawn_for
 
 
-'''for bill in range(0, cash_withdrawn + 1):
-    if bill <= 1:
-        bill += bill
-    print(bill)'''
 
-
-
-cash_for_loop = int(input('How much money(for loop) do you wish to withdraw from the ATM? '))
+#previous try for the for loop that did not work, took me like 3-4 hours of brainstorming trying different methods to come up with current solution
+'''cash_for_loop = int(input('How much money(for loop) do you wish to withdraw from the ATM? '))
 sum = 0
 change_for_hundred_bills_for = 0
 change_for_ten_bills_for = 0
@@ -79,7 +78,7 @@ else:
             sum = sum - sum
     print('{0} hundred dollar bills, '.format(change_for_hundred_bills_for, end=''))
     print('{0} ten dollar bills, '.format(change_for_ten_bills_for, end=''))
-    print('{0} one dollar bills'.format(change_for_one_bills_for, end=''))
+    print('{0} one dollar bills'.format(change_for_one_bills_for, end=''))'''
 
 
 
