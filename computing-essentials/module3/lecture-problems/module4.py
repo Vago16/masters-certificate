@@ -1,5 +1,5 @@
 a = int(input('Enter num: '))
-b = 286
+b = int(input('Enter num: '))
 sum = 0
 
 if (a % 2 == 1):
