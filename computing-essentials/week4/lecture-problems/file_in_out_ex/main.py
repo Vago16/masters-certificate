@@ -1,3 +1,8 @@
+'''
+Read the values from the input text file numbers.txt and write them to a new output file
+formatted.txt.  Also calculate and print to the output file their total and average values.
+'''
+
 #open numbers.txt for reading
 infile = open('numbers.txt', 'r')
 #open formatted.txt for writing
