@@ -14,7 +14,7 @@ numNumbers = 0      #how many numbers there are, used for calculating average
 number = infile.readline()
 
 while (number != ''):       #execute until end of file
-    number = number.strip()
+    number = number.strip()     #gets rid of newline characters
     number = float(number)      #change number type from string to float
     print('{0:15.2f}'.format(number), file = outfile)       #print number values in formatted.txt
     total += number
