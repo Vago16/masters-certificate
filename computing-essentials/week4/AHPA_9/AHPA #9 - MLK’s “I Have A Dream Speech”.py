@@ -11,17 +11,38 @@
 # Student Name: Evagelos Petropoulos
 #
 
-infile = open('AHPA #9 - MLK Speech.txt', 'r')
+infile = open('input.txt', 'r')
+outfile = open('output.txt', 'w')
 
+#READ and print num of characters in speech
+#initiliazed variables
 num_chars = 0
+index = 1
 
+#while there are characters
 while True:
-    char = infile.read(1)
-    num_chars += 1
-    if not char:
+    char = infile.read(1)       #read by character
+    num_chars += 1      #increment number of characters
+    if not char:        #if at end of text, end loop
         break
 
-print(num_chars)
+print(num_chars)        #print number of characters
     
 
+
+
+#WRITE to new file the first paragraph
+
+#initialize variables
+'''line = infile.readline()
+
+while(line != ''):
+    print(line, file = outfile)
+    if (line > 1):
+        break'''
+
+#print('Hello', file = outfile)
+
 infile.close()
+outfile.close()
+
