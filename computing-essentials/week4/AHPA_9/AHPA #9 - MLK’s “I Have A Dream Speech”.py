@@ -12,6 +12,7 @@
 #
 
 infile = open('input.txt', 'r')
+infile2 = open('input.txt', 'r')        #second one for the second part to prevent issues
 outfile = open('output.txt', 'w')
 
 #READ and print num of characters in speech
@@ -26,23 +27,26 @@ while True:
     if not char:        #if at end of text, end loop
         break
 
-print(num_chars)        #print number of characters
-    
+print('Number of characters: {0}'.format(num_chars))        #print number of characters
 
+'''char = infile2.read()
+print(char)'''
 
 
 #WRITE to new file the first paragraph
 
 #initialize variables
-'''line = infile.readline()
+line = infile2.readline()
+index = 0
 
-while(line != ''):
-    print(line, file = outfile)
-    if (line > 1):
-        break'''
-
-#print('Hello', file = outfile)
+for line in infile2:
+    if (index <= 1):
+        print(line, file = outfile)     #write to output
+        index += 1      
+    else: break     #only want the first line which is the first paragraph
+        
 
 infile.close()
+infile2.close()
 outfile.close()
 
