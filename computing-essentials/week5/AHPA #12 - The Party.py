@@ -57,7 +57,7 @@ print('The food being brought includes: {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}.'
 
 #variable for how many people are fed, adds values of third indexes together except for ruth
 amount_fed = frank_list[2] + mary_list[2] + bob_list[2] + lisa_list[2] + mark_list[2] + ann_list[2] + henry_list[2]
-print('{0} people can be fed if Ruth cancels.'.format(amount_fed)) 
+print('{0} people can be fed if Ruth cancels.'.format(amount_fed))      #amount of people that can be fed
 
 
 
