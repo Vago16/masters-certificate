@@ -1,0 +1,113 @@
+Paul Johnson
+Yes
+No
+Yes
+No
+Yes
+Yes
+No
+No
+Yes
+
+Sue Merryweather
+Yes
+Yes
+Yes
+Yes
+Yes
+No
+Yes
+Yes
+No
+Yes
+
+Alice Smalls
+Yes
+No
+No
+Yes
+No
+Yes
+Yes
+No
+No
+
+Robert Anders
+No
+Yes
+You
+Yes
+No
+No
+Yes
+Yes
+Yes
+
+Mike Hammons
+Yes
+Yes
+Yes
+Yes
+Yes
+Yes
+Yes
+Yes
+Yes
+Yes
+
+Charles Nedsburth
+No
+Yes
+Yes
+No
+No
+No
+Yes
+Yes
+No
+
+Amar Indenes
+Yes
+No
+Yes
+Yes
+Yes
+Yes
+Yes
+No
+Yes
+
+Rachel Dunes
+No
+Yes
+Yes
+Yes
+No
+No
+Yes
+No
+Yes
+
+Edgar Smyth
+Yes
+No
+Yes
+Yes
+Yes
+No
+No
+Yes
+Yes
+No
+
+Timothy Quinn
+Yes
+Yes
+No
+No
+No
+No
+No
+Yes
+Yes
+No
