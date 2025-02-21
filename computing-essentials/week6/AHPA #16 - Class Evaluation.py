@@ -28,6 +28,15 @@
 
 fin_scores = [72, 85, 91, 67, 77, 85, 80, 95, 83, 77]
 
+#finding the highest score
+largest = fin_scores[0]     #initializes largest variable, to then compare to all the other elements in the list
+for i in range (1, len(fin_scores)):
+    if fin_scores[i] > largest:
+        largest = fin_scores[i]
+
+print('The highest score is', largest)
+
+#finds average score
 avg_score = sum(fin_scores) / len(fin_scores)       #divides sum of list by length to get average
 print('The average score is', avg_score)
 
