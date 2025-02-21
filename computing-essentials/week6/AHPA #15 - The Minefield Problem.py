@@ -1,6 +1,7 @@
 #
 # AHPA #15 - The Minefield Problem
 #
+# Student Name: Evagelos Petropoulos
 
 
 # Initialize variables
