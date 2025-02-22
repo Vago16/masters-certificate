@@ -46,7 +46,7 @@ print(calc_mpox_by_gender())
 print()     #blank line for readability
 
 #gets the value for how many people are above 65
-seniors = 0
+seniors = 0     #initialize vars
 for i in data:
     senior_females_with_mpox = 0        #initialize vars
     senior_males_with_mpox = 0
@@ -67,33 +67,21 @@ print('\tc. How many women over 65 have mpox?')
 print('\t\t There are {0} women over 65 that have mpox.'.format(senior_females_with_mpox))
 print()
 
+#gets the val for how many people with mpox are under 18
+juniors = 0
+for i in data:
+    mpox = i[13]        #mpox confirmation is the last element, 0 being false and 1 being true
+    if (int(i[1]) < 18):
+        if mpox == '1':
+            juniors += 1
 
+print('3. How many people under the age of 18 have mpox?')
+print('\tThere are {0} people under the age of 18 that have mpox.'.format(juniors))
 
 
 
 
        
-
-
-                  
-
-
-'''if 'F' in i:
-        females_with_mpox += 1
-        print(females_with_mpox, 'females',)
-    if 'M' in i:
-        males_with_mpox += 1 
-        print(males_with_mpox, 'males')           #gender is the first element in each list
-       #mpox confirmation is the last element, 0 being false and 1 being true'''
-
-
-'''if mpox == 1:
-        total_mpox += 1
-        if gender == 'M':
-            males_with_mpox += 1
-        if gender == 'F':
-            females_with_mpox += 1'''
-
 
 
 #closes text to make sure everything works properly
