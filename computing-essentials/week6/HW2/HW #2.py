@@ -6,12 +6,9 @@
 infile = open("HW #2 - Data.txt", "r")
 data = []
 
-
 for line in infile:
     row = line.strip().split()       #splits the lists by commas
     data.append(row)    #appends each line as a new list
-print(data)
-
 
 males_with_mpox = 0
 females_with_mpox = 0
@@ -67,44 +64,48 @@ print('\tc. How many women over 65 have mpox?')
 print('\t\t There are {0} women over 65 that have mpox.'.format(senior_females_with_mpox))
 print()
 
-#gets the val for how many people with mpox are under 18
-juniors = 0
-for i in data:
-    mpox = i[13]        #mpox confirmation is the last element, 0 being false and 1 being true
-    if (int(i[1]) < 18):
-        if mpox == '1':
-            juniors += 1
+#function to count people under 18 with mpox
+def count_juniors():
+    juniors = 0
+    for i in data:
+        mpox = i[13]        #mpox confirmation is the last element, 0 being false and 1 being true
+        if (int(i[1]) < 18):
+            if mpox == '1':
+                juniors += 1
+    return(juniors)
 
 print('3. How many people under the age of 18 have mpox?')
-print('\tThere are {0} people under the age of 18 that have mpox.'.format(juniors))
+print('\tThere are {0} people under the age of 18 that have mpox.'.format(count_juniors()))
 print()
 
-#gets value for overweight males, and checks if they have mpox
-overweight_males_with_mpox = 0
-
-for i in data:
-    mpox = i[13]
-    if 'M' in i:
-        if (int(i[2]) >= 210):
-            if mpox == '1':
-                overweight_males_with_mpox += 1
+#function to count overweight males with mpox
+def count_overweight_males():
+    overweight_males_with_mpox = 0      #initialize var
+    for i in data:
+        mpox = i[13]
+        if 'M' in i:
+            if (int(i[2]) >= 210):
+                if mpox == '1':
+                    overweight_males_with_mpox += 1
+    return(overweight_males_with_mpox)
 
 print('4. If the average weight of a man is 190 pounds, how many men who are overweight by at least 20 pounds have mpox?')
-print('\tThere are {0} men that are overweight that have mpox.'.format(overweight_males_with_mpox))
+print('\tThere are {0} men that are overweight that have mpox.'.format(count_overweight_males()))
 print()
 
-#gets value for overweight females, and checks if they have mpox
-overweight_females_with_mpox = 0
-
-for i in data:
-    mpox = i[13]
-    if 'F' in i:
-        if (int(i[2]) >=  180):
-            if mpox == '1':
-                overweight_females_with_mpox += 1
+#function to count overweight females with mpox
+def count_overweight_females():
+    overweight_females_with_mpox = 0
+    for i in data:
+        mpox = i[13]
+        if 'F' in i:
+            if (int(i[2]) >=  180):
+                if mpox == '1':
+                    overweight_females_with_mpox += 1
+    return(overweight_females_with_mpox)
 
 print('5. If the average weight of a woman is 160 pounds, how many women who are overweight by at least 20 pounds have mpox?')
-print('\tThere are {0} women that are overweight that have mpox.'.format(overweight_females_with_mpox))
+print('\tThere are {0} women that are overweight that have mpox.'.format(count_overweight_females()))
 
        
 
