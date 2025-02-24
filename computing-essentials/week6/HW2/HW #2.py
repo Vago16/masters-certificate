@@ -44,9 +44,9 @@ print()     #blank line for readability
 
 #gets the value for how many people are above 65
 seniors = 0     #initialize vars
+senior_females_with_mpox = 0        #initialize vars
+senior_males_with_mpox = 0
 for i in data:
-    senior_females_with_mpox = 0        #initialize vars
-    senior_males_with_mpox = 0
     mpox = i[13]        #mpox confirmation is the last element, 0 being false and 1 being true
     if (int(i[1]) > 65):
         seniors += 1
