@@ -22,28 +22,36 @@
 #
 #Student Name: Evagelos Petropoulos
 #
-infile_dream_speech = open('AHPA #19 - MLK Speech.txt', 'r')
-infile_jail_speech = open('AHPA #19 - Letter From The  Birmingham City Jail Speech.txt', 'r')
-
-dream_speech_list = []  #empty lists 
+#initialize lists
+dream_speech_list = []  
 jail_speech_list = []
 
-#strips periods, commas, and newline characters while reading lines and splits elements when a space is detected
-for line in infile_dream_speech:
-    words = line.lower().replace('.', '').replace(',', '').replace('!', '').replace(':', '').split()
-    dream_speech_list.extend(words)
+#try-except statement for opening files 
+try:
+    infile_dream_speech = open('AHPA #19 - MLK Speech.txt', 'r')
+    #strips periods, commas, and newline characters while reading lines and splits elements when a space is detected
+    for line in infile_dream_speech:
+        words = line.lower().replace('.', '').replace(',', '').replace('!', '').replace(':', '').split()
+        dream_speech_list.extend(words)
+    infile_dream_speech.close()     #closes files
+except FileNotFoundError:
+    print("Error: File not found.")
+try:
+    infile_jail_speech = open('AHPA #19 - Letter From The  Birmingham City Jail Speech.txt', 'r')
+    for row in infile_jail_speech:
+        words = row.lower().replace('.', '').replace(',', '').replace('!', '').replace(':', '').split()
+        jail_speech_list.extend(words)
+    infile_jail_speech.close()
+except FileNotFoundError:
+    print("Error: File not found.")
 
-for row in infile_jail_speech:
-    words = row.lower().replace('.', '').replace(',', '').replace('!', '').replace(':', '').split()
-    jail_speech_list.extend(words)
+
 
 #converts lists to sets
 dream_speech_set = set(dream_speech_list)
 jail_speech_set = set(jail_speech_list)
 
-#closes files
-infile_dream_speech.close()
-infile_jail_speech.close()
+
 
 #1. Prints out how many unique words there are in Dr. King’s “I Have A Dream” speech
 print('There are {0} unique words in Dr. King’s “I Have A Dream” speech.\n'.format(len(dream_speech_set)))
