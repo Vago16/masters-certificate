@@ -6,7 +6,8 @@
 #initialize empty dictionaries
 infection_by_zip_dict = {}
 this_weeks_infections_dict = {}
-
+#initialize set
+testing_results_set = set()
 #try-except statement for opening infile_infection_by_zip and mapping keys and values to a dictionary 
 try:        
     infile_infection_by_zip = open('InfectionByZip.txt', 'r')
@@ -36,6 +37,20 @@ except FileNotFoundError:
 except ValueError:
          print(f"Error: Invalid format found in file.")
 
+#try-except statement for opening infile_testing_results and mapping lines to a set
+try:        
+    infile_testing_results = open('Testing Results.txt', 'r')
+    testing_results_set = set()
+    for line in infile_testing_results:
+        key, val = line.strip().split()
+        if val == '1':
+             testing_results_set.add(key)
+    infile_testing_results.close()     
+except FileNotFoundError:
+    print("Error: File \'TestingResults.txt\' not found.")
+except ValueError:
+         print(f"Error: Invalid format found in file.")
+
          
 #1.Print the zip code key and associated value(number of infections)
 print('Zip Code # Infections')
@@ -44,7 +59,6 @@ print('32026\t', '    ',infection_by_zip_dict['32026'])
 print('32192\t', '    ',infection_by_zip_dict['32192'])
 print('34997\t', '    ',infection_by_zip_dict['34997'])
 
-print(this_weeks_infections_dict)
 print()     #blank line for readability
 
 #2.Print the zip code key and associated value(number of infections) 
@@ -53,7 +67,7 @@ print('Updated infection data:')
 print('Zip Code # Infections')
 #if the key is in this_weeks_infections_dict, then add the value to the value associated with the same key in infection_by_zip
 if '32003' in this_weeks_infections_dict:
-     print(int('32003\t', '    ',(int(this_weeks_infections_dict['32003']) + int(infection_by_zip_dict['32003']))))
+     print(int('32003\t', '    ',(int(this_weeks_infections_dict['32003']) + int(infection_by_zip_dict['32003']))))     #need to turn the values into integers to add together
 else:
      print('32003\t', '    ',infection_by_zip_dict['32003'])
 
@@ -71,3 +85,17 @@ if '34997' in this_weeks_infections_dict:
      print('34997\t', '    ',(int(this_weeks_infections_dict['34997']) + int(infection_by_zip_dict['34997'])))
 else:
      print('34997\t', '    ',infection_by_zip_dict['34997'])
+
+print()     #blank line for readability
+#3. Print out the unique social security numbers of people who have tested positive for mpox
+print('Testing results based on SS number:')
+print('# SS Number Infected')
+
+position = 1        #index position
+for social_security_num in testing_results_set: 
+    print(position, ',' , social_security_num, '1')
+    position += 1       #increment position
+
+
+
+          
