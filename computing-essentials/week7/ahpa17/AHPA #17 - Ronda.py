@@ -16,37 +16,28 @@
 #
 
 infile = open('AHPA #17 - Rousey Data.txt', 'r')
+#initialize empty list
 data = []
 
+#function to convert total time to seconds
+def convert_to_seconds(time_str):
+    minutes, seconds = time_str.split(":")
+    return int(minutes) * 60 + float(seconds)
+
+
 for line in infile:
-    row = line.strip().split(',')     #splits the lists by commas
-    data.append(row) 
+    line = line.strip()     
+    if line:        #if line is not empty
+        opponent, method, num_of_rounds, time = line.split(',')     #splits values based on commas
+        time_in_seconds = convert_to_seconds(time)
+        data.append((opponent, method, num_of_rounds, time_in_seconds))
+
+sorted_fights = sorted(data)
+top_three_fights = sorted_fights[0:2]
+
+for fight in sorted_fights:
+    print('Ronda fought {0} with {1} in {2} seconds.'.format(opponent, method, time_in_seconds))
 
 infile.close()
 print(data)
 
-#separate out times and make them uniform
-times = []
-pos = 0 
-while pos < len(data):
-    if (data[pos][3][1] == ':'):
-        new_time = data[pos][3][0] + '.' + data[pos][3][2:]
-        pos += 1
-    else:
-        new_time = data[pos][3]
-        pos += 1
-    times.append(new_time)
-
-i = 0
-for time in times:
-    print(time + ' ' + str(i))
-    i += 1
-    
-print(sorted(times))
-
-#add times back in to data list
-index = 0
-for fight in data:
-    fight.pop(3)
-    fight.append(times[index])
-    index +=1
