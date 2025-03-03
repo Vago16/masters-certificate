@@ -46,3 +46,28 @@ print('34997\t', '    ',infection_by_zip_dict['34997'])
 
 print(this_weeks_infections_dict)
 print()     #blank line for readability
+
+#2.Print the zip code key and associated value(number of infections) 
+# after updating with this_weeks_infections_dict keys if they exist
+print('Updated infection data:')
+print('Zip Code # Infections')
+#if the key is in this_weeks_infections_dict, then add the value to the value associated with the same key in infection_by_zip
+if '32003' in this_weeks_infections_dict:
+     print(int('32003\t', '    ',(int(this_weeks_infections_dict['32003']) + int(infection_by_zip_dict['32003']))))
+else:
+     print('32003\t', '    ',infection_by_zip_dict['32003'])
+
+if '32026' in this_weeks_infections_dict:
+     print('32026\t', '    ',(int(this_weeks_infections_dict['32026']) + int(infection_by_zip_dict['32026'])))
+else:
+     print('32026\t', '    ',infection_by_zip_dict['32026'])
+
+if '32192' in this_weeks_infections_dict:
+     print('32192\t', '    ',(int(this_weeks_infections_dict['32192']) + int(infection_by_zip_dict['32192'])))
+else:
+     print('32192\t', '    ',infection_by_zip_dict['32192'])
+
+if '34997' in this_weeks_infections_dict:
+     print('34997\t', '    ',(int(this_weeks_infections_dict['34997']) + int(infection_by_zip_dict['34997'])))
+else:
+     print('34997\t', '    ',infection_by_zip_dict['34997'])
