@@ -50,3 +50,32 @@ t.goto(-200,-75)
 t.pendown()
 t.setheading(0)
 t.forward(400)
+
+#add an 'O' to the grid
+
+#lift pen, move to center, change color, put pen down, draw a circle
+t.penup()
+t.goto(0,-50)
+t.color('blue')
+t.pendown()
+t.circle(50)
+
+#add an 'X' to the grid
+
+#lift pen, move to bottom left of upper left square
+t.penup()
+t.goto(-180,95)
+t.pendown()
+
+#point pen in north east direction and draw a line
+t.setheading(45)
+t.goto(-120,180)
+
+#lift pen, move to upper left of upper left square
+t.penup()
+t.goto(-180,180)
+t.pendown()
+
+#point pen in south east direction and draw a line
+t.setheading(315)
+t.goto(-120,95)
