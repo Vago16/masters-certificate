@@ -1,0 +1,12 @@
+list =[0,8]
+
+def binary_sum(A, i, n):
+    new_list = []
+    if n == 1:
+        return A[1]
+    else:
+        new_list.append(binary_sum(A, i, n/2))
+        new_list.append(binary_sum(A, i + n/2, n/2))
+        return(new_list)
+    
+print(binary_sum(list, 2, 2))
