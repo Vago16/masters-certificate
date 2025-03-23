@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h>>
 /*
 Write a program which prompts the user for 4 integers values to be stored in variables A , B , C and D. You will
 then display 3 messages on the screen (each by executing a printf statement) which will state the result of the
