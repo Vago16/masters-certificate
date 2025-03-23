@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 /*
 Write a program which prompts the user for 4 integers values to be stored in variables A , B , C and D. You will
 then display 3 messages on the screen (each by executing a printf statement) which will state the result of the
@@ -8,10 +8,7 @@ comparison of the variables two by two.
 
 int main() {
     //initialize variables
-    int A = 0;  
-    int B = 0;
-    int C = 0;
-    int D = 0;
+    int A, B, C, D;
 
     //Take user input for variables to be compared
     printf("What is the value for A? ");
@@ -54,5 +51,7 @@ int main() {
     } else { 
         printf("C(%d) is < than D(%d)", C, D);
     }
+
     printf("\n");
+    return EXIT_SUCCESS;
 }
