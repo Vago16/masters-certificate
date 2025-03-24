@@ -1,0 +1,13 @@
+Tests used for prog1;
+nbStars         nbLines         expected behavior                   observed?
+63000           n/a             refuses nbStars,prompts again       same as expected
+0               n/a             refuses nbStars,prompts again       same as expected
+4               n/a             refuses nbStars,prompts again       same as expected
+1,2,3           0               accepts nbStars, refuses nbLines    same as expected
+1,2,3           10              accepts nbStars, refuses nbLines    same as expected
+1,2,3           1-9(all ints    accepts nbStars, accepts nbLines    same as expected
+                included in range)
+g               n/a             refuses nbStars,prompts again       infinite loop(bug?)
+1a              n/a             infinite loop again                 same as expected
+1               g               accepts nbStars, infinitely loops   same as expected
+                                trying to get value for nbLines
