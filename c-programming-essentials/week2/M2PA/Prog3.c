@@ -13,7 +13,24 @@ Bugs:       [Specify here remaining bugs at time of submission]
 
 int main()
 {
-  // Start by pasting inside the main the source you wrote for M2PA's prog2.c file
-  printf("Welcome to Prog3\n");
+  
+  int nbStars = 0;  //declare and initialize integer
+  int nbLines = 0;  //declare and initialize integer 
+
+  /*ask user for number of stars on each line, and then the number of lines */
+  printf("Enter a value for nbStars ");
+  scanf("%d", &nbStars);
+
+  printf("Enter a value for NbLines ");
+  scanf("%d", &nbLines);
+
+  if(nbStars == 1) {
+
+  } else if (nbStars == 2) {
+
+  } else if (nbStars == 3)
+  
+  
+
   return EXIT_SUCCESS;
 }
