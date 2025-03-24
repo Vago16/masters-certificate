@@ -10,13 +10,13 @@ Date:       3/23/25
 Features:   Program takes in an input from the user for the variable NbStars and will continue requesting a value(integer)
             until the input value is between 1-3 inclusive. Then, the program will do the same for the variable Nblines but this time
             for the range 1-9 inclusive.
-Bugs:       The do... while loops infinitely loop if they attempt to scan an input that is a non-integer
+Bugs:       The do... while loops infinitely loop if they attempt to scan an input that is a non-integer.
 */
 
 int main()
 {
   int nbStars = 0;  //declare and initialize integer, this will store a value that is betweeen 1 and 3 inclusive
-  int nbLines = 0;  //declare and initialize integer before user input, this will store a value that is in the range of 1 ro 9 inclusive
+  int nbLines = 0;  //declare and initialize integer, this will store a value that is in the range of 1 to 9 inclusive
 
 
   //Handling variable nbStars - we keep reading until it’s in range (1-3 inclusive)
