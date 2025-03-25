@@ -1,0 +1,17 @@
+R1  R2  R3      Expected            Observed            Justification
+0   1   1       outside of range    same                Make sure program can catch values that are below acceptable range(first three tests are similar)
+1   0   1       outside of range    same                Make sure program can catch values that are below acceptable range
+1   1   0       outside of range    same                Make sure program can catch values that are below acceptable range
+10  1   1       outside of range    same                Make sure program can catch values that are above acceptable range(next three are similar)
+1   10  1       outside of range    same                Make sure program can catch values that are above acceptable range
+1   1   10      outside of range    same                Make sure program can catch values that are above acceptable range
+g   n/a n/a     bug/out of range    same                See if program catches values that are non integers
+2   6   4       1                   1                   Payoff is correctly keyed to the value of R1
+1   5   3       1                   1                   Should output same as previous test
+4   2   6       3                   3                   if Comparison of R2 < R1 is working correctly
+3   1   5       3                   3                   Should output same as previous test
+6   4   2       7                   7                   Embedded if comparison of R3 < R2 is working correctly
+5   3   1       7                   7                   Should output same as previous test
+6   4   4       7                   7                   Embedded else if comparison of R3 < R1 is working correctly
+5   4   3       7                   7                   Should output same as previous test
+4   3   2       3                   3                   else if comparison of R3 < R1 is working correctly
