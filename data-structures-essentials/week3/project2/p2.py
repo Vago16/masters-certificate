@@ -5,6 +5,10 @@
 from timeit import default_timer as timer
 import sys
 
+# ---- Class Empty Exception (since it is not defined in the original file) ---- #
+class Empty(Exception):
+    pass
+
 # ---- Class ArrayQueue (mostly from textbook, code fragments 6.6 and 6.7) ---- #
 # ---- You do not need to modify this class. ---- #
 class ArrayQueue:
@@ -73,12 +77,18 @@ class ArrayQueue:
 # ----- Add your code here ----- #
 
 # TO DO: start timer.
-
+start = timer()
 
 
 # TO DO: Parse the command line arguments.
+if len(sys.argv) != 2:
+	raise ValueError('Please provide one file name.')
+inputFileName = sys.argv[1]
 
-
+print("**********************")
+print("The file that will be used for input is:", inputFileName)
+print("**********************")
+print("\n")	#space to match the output shown in the example output
 
 # DONE: Initialize a queue named q. Use this queue to store the "buy" transactions.
 q = ArrayQueue()
@@ -90,28 +100,64 @@ totalGain = 0
 #        For each transaction, update the queue (add, update, or remove elements).
 #        For transactions of type "sell", print the capital gain for that transaction.
 
+f = open("transactions.txt","r")	#open provided text file
+myList = f.readlines()	#read all lines in text file
+f.close()	
+
+for line in myList:
+	line = line.strip()	#remove whitespace and newline characters
+	parts = line.split()	#splits line further to make grabbing relevant values simpler, now is a list of each 'part' of the string	
+
+	if (parts[0] == 'buy'):
+		shares_to_buy = int(parts[1])	#num shares to buy
+		buy_price = int(parts[4][1:])	#price of shares
+		q.enqueue((shares_to_buy,buy_price))
+		print("buy: " + str(shares_to_buy) + " at $" + str(buy_price))
+	elif (parts[0] == 'sell'):
+		shares_to_sell = int(parts[1])	#num shares to sell
+		sell_price = int(parts[4][1:])	#price of shares
+		print("sell: " + str(shares_to_sell) + " at $" + str(sell_price))
+		capital_gain = 0	#initialize variable to hold capital gains
+
+		while (shares_to_sell > 0):
+			#gets first(oldest) shares and price that the shares were bought at
+			#uses first() instead of dequeue to prevent issues with order
+			shares_bought, price_bought = q.first()
+
+			#sell all shares from oldest transaction if it is less than or equal to what the amount that is being sold is
+			if (shares_bought <= shares_to_sell):
+				capital_gain = capital_gain + (shares_bought * (sell_price - price_bought)) #increment the value by the amount of shares bought times the difference of the selling and buying price
+				shares_to_sell -= shares_bought		#decrement value by the amount of shares bought that were just calculated to capital_gain
+				q.dequeue()	#remove first item from queue as the transaction has been exhausted
+			else:	#if greater, then only sell part of shares
+				capital_gain = capital_gain + (shares_to_sell * (sell_price - price_bought))
+				new_share_amount = shares_bought - shares_to_sell	
+				q.replace_first((new_share_amount, price_bought))		#replaces first item instead of enqueue() to keep order intact
+				shares_to_sell = 0 #no more shares to sell
+		
+		totalGain += capital_gain	#increment totalGain
+		print("This transaction's capital gain is:", capital_gain, "\n")
 
 
-
-
-
+		
 # DONE: After processing the file, print the total capital gain for the entire sequence.
 print("**********************")
 print("The total capital gain is:", totalGain)
-
 # TO DO: Print remaining elements in the queue.
 print("\n**********************")
 print("Shares remaining in the queue:")
-
+while not q.is_empty():
+    shares, price = q.dequeue()
+    print("{0} shares bought at ${1} per share.".format(shares, price))
 
 
 
 # TO DO: end timer.
-
+end = timer()
 
 
 # TO DO: Print program's runtime. 
-print("\n**********************")
-
+print("\n************************")
+print("Total Time of Program:", (end - start) * 1000, "milliseconds")
 
 
