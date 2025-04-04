@@ -1,0 +1,96 @@
+#Singly Linked List for ease of use for transversing a To do list
+
+class Node:
+    #initialize node's fields
+    def __init__(self, task, next):
+        self._task = task   #reference to tasks
+        self.next = next    #reference to next node
+
+class Tasks_to_Do:
+    def __init__(self):
+        #initialize header pointer
+        self.head = None
+    
+    def displayList(self):
+        #display current list of tasks to do
+        current = self.head
+        print("***Task List of the Day***")
+        while current:
+            print(current._task)    #print the task
+            current = current.next
+        print("\n")
+
+    def add(self, data):
+        #add in a new task
+        new_node = Node(data, None)
+        #if list is empty
+        if self.head is None:
+            self.head = new_node
+        else:   #move to header pointer
+            current = self.head
+            #moves through list to find last node
+            while current.next:
+                current = current.next
+            current.next = new_node
+
+    def remove(self, key):
+        #remove a task that has been completed
+        current = self.head
+        previous = None
+        #to catch issues with case sensititvity
+        key = key.lower()
+        #traversing the list
+        while current and current._task.lower() != key:
+            previous = current
+            current = current.next
+        #key is not found, exit function
+        if current is None:
+            return  
+        if previous is None:
+            self.head = current.next 
+        else:
+            previous.next = current.next 
+        
+
+#initialize the singly linked list
+task_list = Tasks_to_Do()
+task_list.add("Go to store")    #add items
+task_list.add("Feed dogs")
+task_list.add("Do laundry")
+task_list.displayList()     #display the list
+task_list.remove("Do laundry")
+task_list.remove("FeEd Dogs")       #check to see if case sensitivity impacts removed() method
+task_list.remove("Grab the kids from practice") #remove should not return anything if passing an arg that is not found
+task_list.add("Grab the kids from practice")
+task_list.displayList()
+
+#OUTPUT
+#***Task List of the Day***
+#Go to store
+#Feed dogs
+#Do laundry
+#
+#
+#***Task List of the Day***
+#Go to store
+#Grab the kids from practice
+
+
+
+
+'''
+To Do List using a Singly Linked List
+For this assignment, I decided to use a singly linked list over a doubly linked list for simplicity purposes.
+Each node on the list represents a task(as a string) that has yet to be done.
+
+A singly linked list may have the same space complexity as an arrayList, O(n) but where it shines is its efficiency with 
+time.  When conducting operations, a singly linked list will have time complexity of O(1), as opposed to an arrayList, which 
+might typically have O(1) runtime for most operations but depending on the position of elements, ie dealing with elements in
+the middle of the array, might run closer to O(n) time.  This feature of linked lists comes from the fact that they are not 
+sequential in memory, like arrays, and instead have pointers that hold memory addresses for adjecent nodes.
+
+Methods:
+    displayList(): prints out all the items in the list on separate lines after displaying the title
+    add(data): adds in argument, data, passed as a new item to the list 
+    remove(key): removes the argument, key, passed in if it exists
+'''
