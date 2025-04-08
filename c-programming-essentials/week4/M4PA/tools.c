@@ -3,6 +3,18 @@
 #include <stdlib.h>
 #include "tools.h"
 
+/*
+Assignment  M4PA
+File        M4PA.c
+
+Student:    Evagelos Petropoulos U75564437
+Date:       4/7/25
+
+Features:   This program implements 2 functions that are meant to work on 2 dimensional arrays.  isMatrixSorted checks
+            if the matrix is sorted and matrixSort sorts the matrix. 
+Bugs:       No known bugs
+*/
+
 int isMatrixSorted( int data[NB_ROWS][NB_COLS] ){
     int total_elements = NB_ROWS * NB_COLS; //size of array
 
