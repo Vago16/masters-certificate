@@ -96,26 +96,25 @@ playlist_title = g.readline().rstrip()
 
 while playlist_title != '':
     search_node = headNodeOrig  #starts the search at the head
-    found_node = None   #initializes variable for the value that is to be searched for
+    found_node = None   #initializes variable for the value that is to be searched for if found
 
-    while search_node is not None:
+    while search_node is not None:      #traverses the original song list till the end
         if search_node.getSongTitle() == playlist_title:
-            found_node = search_node
+            found_node = search_node        #store the value if matching the one being searched for
             break
-        search_node = search_node.getNextInOrigOrder()
+        search_node = search_node.getNextInOrigOrder()      #keep going if not found
 
     #print(search_node.getSongTitle())   #make sure correct order is happening, uncomment to check
 
-    if found_node is not None:
+    if found_node is not None:      #if the song was found and found_node was updated
         if headNodePlaylist is None:
-            headNodePlaylist = found_node   #rearranges so head node now has playlist song
+            headNodePlaylist = found_node   #rearranges so head node now has first found_node as playlist song
         else:
-            #update head pointers
-            currentNode.setNextInPlaylist(found_node)
-            found_node.setPrevInPlaylist(currentNode)
+            currentNode.setNextInPlaylist(found_node)     #link current playlist node to the next song node 
+            found_node.setPrevInPlaylist(currentNode)     #link current playlist node to the previous song node
 
-        currentNode = found_node    #location now at the current node
-        tailNodePlaylist = found_node   #update tail pointers
+        currentNode = found_node    #location of current node is now where we added the new one
+        tailNodePlaylist = found_node   #update tail pointer of new song node
 
 
     playlist_title = g.readline().rstrip()
