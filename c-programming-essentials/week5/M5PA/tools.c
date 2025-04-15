@@ -62,14 +62,37 @@ int words_initialize( char* str, char* words[], int maxwords ){
                     maxwords - the size of the words array of pointers
     */
    int word_count = 0;
-   int i = 0;
+   char i = 0;
 
+   
    while (str[i] != '\0' && word_count < maxwords) {
+        //skip seperators at beginning
+        while (is_separator(str[i])) {
+            i += 1;
+        }
 
-    
+        //if word is found, mark beginning
+        if (str[i] != '\0') {
+            // Store the start of the word
+            words[word_count] = &str[i];  
+            
+            // Move index i to the end of this word
+            while (str[i] != '\0' && !is_separator(str[i])) {
+                i += 1;
+            }
+
+            // End this word with '\0'
+            if (str[i] != '\0') {
+                str[i] = '\0';
+                //increment to prevent reprocessing of \0 operator 
+                i += 1;    
+            }
+             // Increment the word count
+            word_count++; 
+        }
    }
-
-
+   //return num of words found
+   return word_count;
 }
 
 

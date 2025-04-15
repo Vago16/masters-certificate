@@ -8,14 +8,15 @@
 #include "tools.h"
 
 // Number of tests in the arrays below
-const int NB_TESTS = 4;
+const int NB_TESTS = 5;
 
 // strings to be used with words_modify when testing
 const char *tests_inputs[] = {
     "hello",                /* making sure we translate a single word */
     "how are you",          /* same with multiple words */
     "several   spaces",      /* several spaces in a row are just fine */
-    "aaaaa"                 /* repeating letters */
+    "aaaaa",                 /* repeating letters */
+    "one, two, three"        /* commas should be counted as separators */   
 };
 
 // Expected results from words_modify when applied to the above
@@ -23,7 +24,8 @@ const char *tests_expected[] = {
     "olleh",
     "woh era uoy",
     "lareves   secaps",
-    "aaaaa"
+    "aaaaa",
+    "eno, owt, eerht"
     ""
 };
 
