@@ -8,11 +8,25 @@ void word_reverse( char* str ){
                     not modify the end of string marker '\0'.
         PARAMETERS  str - the string to reverse
     */
+    char *end = str;
 
-    // THE CODE INSIDE IS ONLY A TEMPLATE -  REPLACE IT ALL!
-    while(*str){
-        *str = '*';
-        str++;
+    //move the end variable to the last character before \0, '' is for space in memory
+    while (*end != '\0') {
+        end += 1;
+    }
+    
+    //moves end back to just before \0
+    end -= 1;
+
+    //swap style loop to switch characters
+    while (str < end) {
+        char temporary = *str;
+        *str = *end;
+        *end = temporary;
+        
+        //increment/decrement str and end resepectively to get through the string
+        str += 1;
+        end -= 1;
     }
 }
 
@@ -47,9 +61,13 @@ int words_initialize( char* str, char* words[], int maxwords ){
                                words we have identified
                     maxwords - the size of the words array of pointers
     */
+   int word_count = 0;
+   int i = 0;
 
-    words[0] = str;
-	return(1);
+   while (str[i] != '\0' && word_count < maxwords) {
+
+    
+   }
 
 
 }
