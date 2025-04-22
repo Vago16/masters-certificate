@@ -13,10 +13,48 @@ char *strdup (const char *s) {
 }
 
 char* taurahize_word(const char * const word){
-    return strdup(word);  // Useless right now, modify it
+    char *translation_table[] = {"", "A", "Ba", "Aki", "Aoke", "Aehok", "Aloaki", "Ishnelo",
+                            "Akiticha", "Echeyakee", "Awakahnahe", "Aloakihshne", "Awakeekieloh",
+                            "Ishnehawahalo", "Awakeeahmenalo", "Ishnehalohporah"};
+
+    size_t len = strlen(word);
+    if (len > 15) {
+        return strdup("#@%");
+    } else {
+        return strdup(translation_table[len]); 
+    } 
+    
 }
 
 
 char* taurahize_phrase(const char* const phrase){
-     return strdup(phrase);  // Useless right now, modify it
+    size_t len = strlen(phrase);
+    char *working_copy = strdup(phrase);
+
+    char *translation = (char *)malloc(len + 1);
+    
+    if (!translation) {
+        free(working_copy);
+        return NULL;
+    }
+
+    translation[0] = '\0';  //initialize
+
+    char *word = strtok(working_copy, " \t"); 
+
+    while (word != NULL) {
+        char *translated_word = taurahize_word(word);
+        if (!translated_word) break;
+
+        strcat(translation, translated_word);
+        free(translated_word);
+
+        word = strtok(NULL, " \t");
+
+        if (word != NULL){
+            strcat(translation, " ");
+        }
+    }
+    free(working_copy);
+    return translation;
 }
