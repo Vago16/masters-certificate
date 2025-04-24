@@ -21,7 +21,6 @@ class HashTable:
 
     #insert values into hash table
     def insert(self, key):
-        key = key.lower()       #to make sure only lowercase values are stored
         index = self.hash_function(key)
         orig_index = index      #index before insertion
         i = 0
@@ -73,7 +72,12 @@ class HashTable:
                 break
         return False
 
-
+    def get_keywords(self):
+        keywords = []
+        for word in self.table:
+            if word != "":
+                keywords.append(word)
+        return keywords
 
 
 #command line arguments
@@ -90,15 +94,12 @@ firstList = first.readlines()	#read all lines in text file
 first.close()	
 
 #initialize first hash table
-first_hash_table = HashTable()
-
+hash_table = HashTable()
 
 for line in firstList:
     words = line.strip().lower().split()
     for word in words:
-        first_hash_table.insert(word)
-
-first_hash_table.display()
+        hash_table.insert(word)
 
 #open and read second file
 second = open(secondFile,"r")	#open provided text file
@@ -108,6 +109,15 @@ second.close()
 #initialize the number of lines to be read and later displayed
 num_lines = 0
 
+#initialize dict to store words and frequency used
+keyword_frequencies = {}
+
+#get list of keywords(words that appeared in first file to compare against the second file)
+keywords = hash_table.get_keywords()
+
+for keyword in keywords:
+    keyword_frequencies[keyword] = 0
+
 #initialize the number of words to be read and later displayed
 num_words = 0
 
@@ -116,16 +126,22 @@ for line in secondList:
     words = line.strip().lower().split()
     for word in words:
         num_words += 1
+        if hash_table.contains(word):
+            keyword_frequencies[word] += 1
 
+print()
 print("**********************")
 print("***** Statistics *****")
 print("**********************")
 print("Break down by keyword:")
+print()
+#loop through and print out the keywords and frequencies
+for keyword in hash_table.get_keywords():
+    print("{0} : {1}".format(keyword_frequencies[keyword], keyword))
 print("Total lines read: {0}".format(num_lines))
 print("Total words read: {0}".format(num_words))
 #end timer
 end = timer()
-
 #print program runtime
 print("Total Time of Program:", (end - start) * 1000, "milliseconds")
 
