@@ -8,7 +8,7 @@ char * hsl_allocate ( int size ) ;
 
 bool hsl_deallocate (char* s);
 
-bool hsl_deallocate_cleanly(char* s);
+bool hsl_deallocate_cleanly(char** s);
 
 char * hsl_clone ( char* s );
 
