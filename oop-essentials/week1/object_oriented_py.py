@@ -5,7 +5,7 @@
 
 class Individual:
     #object to be used by the class Group
-    def _init_(self, id):
+    def __init__(self, id):
         #nitialize Individual object with id, name, vaccination status(set to false(0) initially for all 3 vaccines)
         self.id = id
         self.vac_a = 0
@@ -16,11 +16,12 @@ class Individual:
         #makes sure the value input is valid for the method give_vaccine()
         while True:     #keep looping until there is a valid integer input
             try:
-                value = int(input('{0}? ').format(vaccine_type))
-                if value != 0 and value != 1:     #in case the user inputs an integer that is not 0 or 1, repeats question for input
-                    print(' Please enter in 0 for no or 1 for yes.')
-                    value = int(input('  Does the individual have vac_a? '))
-                break
+                prompt =('{0}? ').format(vaccine_type)
+                value = int(input(prompt))
+                if value in (0, 1):  # valid input
+                    return value
+                else:
+                    print(' Please enter 0 for no or 1 for yes.')
 
             except ValueError:      #if not an integer, raise a ValueError
                 print(' Please enter in 0 for no or 1 for yes.')
@@ -28,9 +29,9 @@ class Individual:
     def give_vaccine(self):
         #inputs data for each vaccine(0 is a no for the particular vaccine and 1 is a yes)
         print('Enter in the vaccination data for individual {0} (0 for no, 1 for yes): '.format(self.id + 1))
-        self.vac_a = self.correct_input('  vac_a')
-        self.vac_b = self.correct_input('  vac_b')
-        self.vac_c = self.correct_input('  vac_c')
+        self.vac_a = self.correct_input('vac_a')
+        self.vac_b = self.correct_input('vac_b')
+        self.vac_c = self.correct_input('vac_c')
 
     def report_individual(self):
         #returns what vaccines an individual does and does not have
@@ -102,3 +103,34 @@ class Group:
         print('     vac_a: {0}'.format(total_vac_a))
         print('     vac_b: {0}'.format(total_vac_b))
         print('     vac_c: {0}'.format(total_vac_c))
+
+    def start(self):
+        #start program menu with actions to be performed
+        while True:
+    
+            self.print_menu()
+
+            action = input('What do you want to do? ')
+            action = action.lower()
+            action = action[0]  # just use first letter of input in case more than one is input
+            print()
+
+            if action == 'i':
+                self.input_group_data()
+
+            elif action == 'r':    
+                self.report_from_group()
+
+            elif action == 'v': 
+                self.report_total()
+
+            #quit the program
+            elif action == 'q':
+                break
+
+            #invalid input
+            else:
+                print('* Not a valid option, select from one of the choices available *')
+
+group = Group()
+group.start()
