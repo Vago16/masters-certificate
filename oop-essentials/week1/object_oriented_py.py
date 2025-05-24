@@ -3,6 +3,11 @@
 # Evagelos Petropoulos
 # U75564437
 
+#This program uses object oriented programming to track three types of vaccines in a population represented by 15 individuals.
+#There are two classes, Individual and Group, which are in a composition relationship as the Individual class(in this 
+#case object now) does not exist without the Group class.
+
+
 class Individual:
     #object to be used by the class Group
     def __init__(self, id):
