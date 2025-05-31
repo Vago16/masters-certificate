@@ -5,5 +5,5 @@
 
 from classes import *
 
-group = Group()
-group.start()
+group = Group()     #create instance of class
+group.start()       #call method to start the program

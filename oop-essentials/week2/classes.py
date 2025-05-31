@@ -62,7 +62,7 @@ class Individual:
         self.sympt_b = self.correct_input_symptom('sympt_b')
         self.sympt_c = self.correct_input_symptom('sympt_c')
 
-    def report_individual(self):
+    def report_individual_vacc(self):
         #returns what vaccines an individual does and does not have
         print(' Individual {0} vaccination data'.format(self.id + 1))
 
@@ -81,9 +81,29 @@ class Individual:
         else:
             print('     vac_c: No')
 
+    def report_individual_symptoms(self):
+        #returns what symptoms an individual does and does not have
+        print(' Individual {0} symptom data'.format(self.id + 1))
+
+        if self.sympt_a:        #if self.sympt_a == 1(True)
+            print('     sympt_a: Yes')
+        else:
+            print('     sympt_a: No')
+
+        if self.sympt_b:        
+            print('     sympt_b: Yes')
+        else:
+            print('     sympt_b: No')
+
+        if self.sympt_c:        
+            print('     sympt_c: Yes')
+        else:
+            print('     sympt_c: No')
+
 class Group:
     #class that has 15 Individual objects and uses them to track vaccine status
-    def __init__(self, num_individuals = 15):
+    def __init__(self, num_individuals = 5):    
+        ######CHANGE BACK TO 15#####
         self.individuals = []       #initialize list for Individual objects, with placeholders for name, last_name, and address
         for i in range(num_individuals):
             self.individuals.append(Individual(i, 'Name{0}'.format(i), 'Last_Name{0}'.format(i), 'Address{0}'.format(i)))
@@ -105,21 +125,21 @@ class Group:
             individual.give_vaccine()
             individual.check_symptom()
 
-    def report_from_group(self):
+    def report_from_group_vacc(self):
         #returns vaccine data for a selected Individual object
         while True:
             try:
                 individual_num = int(input('    Enter the number of the individual(1-15): '))
                 if 1 <= individual_num <= len(self.individuals):
-                    self.individuals[individual_num - 1].report_individual()
+                    self.individuals[individual_num - 1].report_individual_vacc()
                     break
                 else:
                     print(' Please enter in a number between 1-15')
 
             except ValueError:
                 print(' Please enter in a number between 1-15')
-
-    def report_total(self):
+    
+    def report_total_vacc(self):
         #report vaccination totals for each vaccination type
         #initialize totals of each vaccine
         total_vac_a = 0
@@ -136,6 +156,66 @@ class Group:
         print('     vac_b: {0}'.format(total_vac_b))
         print('     vac_c: {0}'.format(total_vac_c))
 
+    def report_symptoms_per_vacc(self):
+        #report symptom data for each vaccination type
+        #initialize symptom data for each vaccine
+        total_vac_a_sympt_a = 0
+        total_vac_a_sympt_b = 0
+        total_vac_a_sympt_c = 0
+
+        total_vac_b_sympt_a = 0
+        total_vac_b_sympt_b = 0
+        total_vac_b_sympt_c = 0
+
+        total_vac_c_sympt_a = 0
+        total_vac_c_sympt_b = 0
+        total_vac_c_sympt_c = 0
+
+        for i in self.individuals:
+            if i.vac_a:     #if individual has vac_a
+                if i.sympt_a:
+                    total_vac_a_sympt_a += i.sympt_a
+                if i.sympt_b:
+                    total_vac_a_sympt_b += i.sympt_b
+                if i.sympt_c:
+                    total_vac_a_sympt_c += i.sympt_c
+
+            if i.vac_b:     
+                if i.sympt_a:
+                    total_vac_b_sympt_a += i.sympt_a
+                if i.sympt_b:
+                    total_vac_b_sympt_b += i.sympt_b
+                if i.sympt_c:
+                    total_vac_b_sympt_c += i.sympt_c
+
+            if i.vac_c:     
+                if i.sympt_a:
+                    total_vac_c_sympt_a += i.sympt_a
+                if i.sympt_b:
+                    total_vac_c_sympt_b += i.sympt_b
+                if i.sympt_c:
+                    total_vac_c_sympt_c += i.sympt_c
+
+        print(' Symptom totals per vaccine:')
+        print('     **vac_a**')
+        print('         sympt_a: {0}'.format(total_vac_a_sympt_a))
+        print('         sympt_b: {0}'.format(total_vac_a_sympt_b))
+        print('         sympt_c: {0}'.format(total_vac_a_sympt_c))
+
+        print('     **vac_b**')
+        print('         sympt_a: {0}'.format(total_vac_b_sympt_a))
+        print('         sympt_b: {0}'.format(total_vac_b_sympt_b))
+        print('         sympt_c: {0}'.format(total_vac_b_sympt_c))
+
+        print('     **vac_a**')
+        print('         sympt_a: {0}'.format(total_vac_c_sympt_a))
+        print('         sympt_b: {0}'.format(total_vac_c_sympt_b))
+        print('         sympt_c: {0}'.format(total_vac_c_sympt_c))
+                        
+
+    def reset(self):
+        pass
+
     def start(self):
         #start program menu with actions to be performed
         while True:
@@ -151,16 +231,16 @@ class Group:
                 self.input_group_data()
 
             elif action == 'r':    
-                self.report_from_group()
+                self.report_from_group_vacc()
 
             elif action == 'v': 
-                self.report_total()
+                self.report_total_vacc()
 
             elif action == 's': 
-                pass
+                self.report_symptoms_per_vacc()
 
             elif action == 't': 
-                pass
+                self.reset()
 
             #quit the program
             elif action == 'q':
