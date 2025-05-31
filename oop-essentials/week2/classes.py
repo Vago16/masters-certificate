@@ -62,9 +62,46 @@ class Individual:
         self.sympt_b = self.correct_input_symptom('sympt_b')
         self.sympt_c = self.correct_input_symptom('sympt_c')
 
+    def identifying_info(self):
+        #asks for and stores name, last_name, and address
+        while True:
+            person_name = input("   Enter First Name(20 character max): ")
+            self.name = person_name.strip()
+            if not person_name:
+                print("Must input a name")
+            elif len(person_name) > 20:
+                print("Please enter 20 characters max")
+            elif person_name:     #if person_name is not empty (person_name != "")
+                break
+
+        while True:
+            person_last_name = input("   Enter Last Name(20 character max): ")
+            self.last_name = person_last_name.strip()
+            if not person_last_name:
+                print("Must input a name")
+            elif len(person_last_name) > 20:
+                print("Please enter 20 characters max")
+            elif person_last_name:     
+                break
+            
+        
+        while True:
+            person_address = input("   Enter Address(40 character max): ")
+            self.address = person_address.rstrip()
+            if not person_address:
+                print("Must input an address")
+            elif len(person_address) > 40:
+                print("Please enter 40 characters max")
+            elif person_address:     
+                break
+
+
     def report_individual_vacc(self):
         #returns what vaccines an individual does and does not have
-        print(' Individual {0} vaccination data'.format(self.id + 1))
+        print('\nIndividual {0} vaccination data\n'.format(self.id + 1))
+        print(' First Name: {0}'.format(self.name))
+        print(' Last Name: {0}'.format(self.last_name))
+        print(' Address: {0}'.format(self.address))
 
         if self.vac_a:        #if self.vac_a == 1(True)
             print('     vac_a: Yes')
@@ -102,8 +139,7 @@ class Individual:
 
 class Group:
     #class that has 15 Individual objects and uses them to track vaccine status
-    def __init__(self, num_individuals = 5):    
-        ######CHANGE BACK TO 15#####
+    def __init__(self, num_individuals = 15):    
         self.individuals = []       #initialize list for Individual objects, with placeholders for name, last_name, and address
         for i in range(num_individuals):
             self.individuals.append(Individual(i, 'Name{0}'.format(i), 'Last_Name{0}'.format(i), 'Address{0}'.format(i)))
@@ -124,6 +160,7 @@ class Group:
         for individual in self.individuals:
             individual.give_vaccine()
             individual.check_symptom()
+            individual.identifying_info()
 
     def report_from_group_vacc(self):
         #returns vaccine data for a selected Individual object
@@ -132,6 +169,7 @@ class Group:
                 individual_num = int(input('    Enter the number of the individual(1-15): '))
                 if 1 <= individual_num <= len(self.individuals):
                     self.individuals[individual_num - 1].report_individual_vacc()
+
                     break
                 else:
                     print(' Please enter in a number between 1-15')
@@ -207,14 +245,22 @@ class Group:
         print('         sympt_b: {0}'.format(total_vac_b_sympt_b))
         print('         sympt_c: {0}'.format(total_vac_b_sympt_c))
 
-        print('     **vac_a**')
+        print('     **vac_c**')
         print('         sympt_a: {0}'.format(total_vac_c_sympt_a))
         print('         sympt_b: {0}'.format(total_vac_c_sympt_b))
         print('         sympt_c: {0}'.format(total_vac_c_sympt_c))
                         
 
     def reset(self):
-        pass
+        #set all vaccine statuses to 0(false) along with symptom statuses
+        for i in self.individuals:
+            i.vac_a = 0
+            i.vac_b = 0
+            i.vac_c = 0
+            i.sympt_a = 0
+            i.sympt_b = 0
+            i.sympt_c = 0
+        print(" All vaccinations and symptom data have been reset")
 
     def start(self):
         #start program menu with actions to be performed
