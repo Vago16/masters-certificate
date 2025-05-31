@@ -7,7 +7,7 @@ class Individual:
     #object to be used by the class Group
     def __init__(self, id, name, last_name, address):
         #initialize Individual object with id, vaccination status(set to false(0) initially for all 3 vaccines)
-        #
+        #symptom status(set to false(0) initially for all 3 symptoms), name, last_name, and address
         self.id = id
         self.vac_a = 0
         self.vac_b = 0
@@ -20,7 +20,7 @@ class Individual:
         self.address = address
 
 
-    def correct_input(self,vaccine_type):
+    def correct_input_vacc(self,vaccine_type):
         #makes sure the value input is valid for the method give_vaccine()
         while True:     #keep looping until there is a valid integer input
             try:
@@ -37,9 +37,30 @@ class Individual:
     def give_vaccine(self):
         #inputs data for each vaccine(0 is a no for the particular vaccine and 1 is a yes)
         print('Enter in the vaccination data for individual {0} (0 for no, 1 for yes): '.format(self.id + 1))
-        self.vac_a = self.correct_input('vac_a')
-        self.vac_b = self.correct_input('vac_b')
-        self.vac_c = self.correct_input('vac_c')
+        self.vac_a = self.correct_input_vacc('vac_a')
+        self.vac_b = self.correct_input_vacc('vac_b')
+        self.vac_c = self.correct_input_vacc('vac_c')
+
+    def correct_input_symptom(self, symptom_type):
+        #makes sure the value input is valid for the method check_symptom()
+        while True:     #keep looping until there is a valid integer input
+            try:
+                prompt =('{0}? ').format(symptom_type)
+                value = int(input(prompt))
+                if value in (0, 1):  # valid input
+                    return value
+                else:
+                    print(' Please enter 0 for no or 1 for yes.')
+
+            except ValueError:      #if not an integer, raise a ValueError
+                print(' Please enter in 0 for no or 1 for yes.')
+
+    def check_symptom(self):
+        #inputs data for each symptom(0 is a no for the particular symptom and 1 is a yes)
+        print('Enter in the symptom data for individual {0} (0 for no, 1 for yes): '.format(self.id + 1))
+        self.sympt_a = self.correct_input_symptom('sympt_a')
+        self.sympt_b = self.correct_input_symptom('sympt_b')
+        self.sympt_c = self.correct_input_symptom('sympt_c')
 
     def report_individual(self):
         #returns what vaccines an individual does and does not have
@@ -63,9 +84,9 @@ class Individual:
 class Group:
     #class that has 15 Individual objects and uses them to track vaccine status
     def __init__(self, num_individuals = 15):
-        self.individuals = []       #initialize list for Individual objects
+        self.individuals = []       #initialize list for Individual objects, with placeholders for name, last_name, and address
         for i in range(num_individuals):
-            self.individuals.append(Individual(i))
+            self.individuals.append(Individual(i, 'Name{0}'.format(i), 'Last_Name{0}'.format(i), 'Address{0}'.format(i)))
 
     def print_menu(self):
         #displays the program's menu of options for the group
@@ -82,6 +103,7 @@ class Group:
         #inputs vaccine data for every Individual object in Group
         for individual in self.individuals:
             individual.give_vaccine()
+            individual.check_symptom()
 
     def report_from_group(self):
         #returns vaccine data for a selected Individual object
