@@ -26,6 +26,19 @@ window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 clock = pygame.time.Clock()  
 font = pygame.font.SysFont("None", 30)
 
+#3 define functions
+def save_data():
+    #save input data into attributes
+    individual.name = input_name.get_text()
+    individual.last_name = input_last_name.get_text()
+    individual.address = input_address.get_text()
+
+def toggle_to_text(val):
+    #change binary to yes/no
+    if val:
+        return "Yes"
+    else:
+        return "No"
 # 4 - Load assets: image(s), sounds, etc.
 
 # 5 - Initialize variables
@@ -39,6 +52,17 @@ next_button = SimpleButton(window, 120, 20, 80, 30, "Next", font)
 
 #create instance of save button
 save_button = SimpleButton(window, 220, 20, 80, 30, "Save", font)
+
+#create instances of vaccine buttons to toggle status
+vac_a_button = SimpleButton(window, 360, 80, 20, 20, None, font)
+vac_b_button = SimpleButton(window, 360, 100, 20, 20, None, font)
+vac_c_button = SimpleButton(window, 360, 120, 20, 20, None, font)
+
+#create instances of symptom buttons to toggle status
+sympt_a_button = SimpleButton(window, 680, 80, 20, 20, None, font)
+sympt_b_button = SimpleButton(window, 680, 100, 20, 20, None, font)
+sympt_c_button = SimpleButton(window, 680, 120, 20, 20, None, font)
+
 
 #creat instances of textboxes
 input_name = TextBox(150, 300, 140, 30, font)
@@ -67,6 +91,12 @@ while True:
     prev_button.draw()
     next_button.draw()
     save_button.draw()
+    vac_a_button.draw()
+    vac_b_button.draw()
+    vac_c_button.draw()
+    sympt_a_button.draw()
+    sympt_b_button.draw()
+    sympt_c_button.draw()
 
     individual = group.individuals[current_index]   #get current individual from the group
     #show name of individual
@@ -77,9 +107,9 @@ while True:
     window.blit(name_window, (200,60))      #show name on window
 
     #show vaccine statuses of individual(added names to vaccine to make easier to differentiate(also in alphabetical order))
-    vac_a_text = "Vaccine A (Johnson): {}".format(individual.vac_a)
-    vac_b_text = "Vaccine B (Moderna): {}".format(individual.vac_b)
-    vac_c_text = "Vaccine C (Pfizer): {}".format(individual.vac_c)
+    vac_a_text = "Vaccine A (Johnson): {}".format(toggle_to_text(individual.vac_a))
+    vac_b_text = "Vaccine B (Moderna): {}".format(toggle_to_text(individual.vac_b))
+    vac_c_text = "Vaccine C (Pfizer): {}".format(toggle_to_text(individual.vac_c))
 
     vac_a_window = font.render(vac_a_text, True, BLACK)
     vac_b_window = font.render(vac_b_text, True, BLACK)
@@ -90,9 +120,9 @@ while True:
     window.blit(vac_c_window, (100, 120))
 
     #show symptom statuses of individual(added names to symptoms to make easier to differentiate(also in alphabetical order)
-    sympt_a_text = "Symptom A (Coughing): {}".format(individual.sympt_a)
-    sympt_b_text = "Symptom B (Fever): {}".format(individual.sympt_b)
-    sympt_c_text = "Symptom C (Nausea): {}".format(individual.sympt_c)
+    sympt_a_text = "Symptom A (Coughing): {}".format(toggle_to_text(individual.sympt_a))
+    sympt_b_text = "Symptom B (Fever): {}".format(toggle_to_text(individual.sympt_b))
+    sympt_c_text = "Symptom C (Nausea): {}".format(toggle_to_text(individual.sympt_c))
 
     sympt_a_window = font.render(sympt_a_text, True, BLACK)
     sympt_b_window = font.render(sympt_b_text, True, BLACK)
@@ -118,10 +148,23 @@ while True:
             sys.exit()
         
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if save_button.is_clicked(event.pos):
-                individual.name = input_name.get_text()
-                individual.last_name = input_last_name.get_text()
-                individual.address = input_address.get_text()
+            if save_button.is_clicked(event.pos):   #save button saves input
+                save_data()
+
+            if vac_a_button.is_clicked(event.pos):      #toggle vaccine status
+                individual.vac_a = 1 - individual.vac_a  # Flip between 0 and 1
+            if vac_b_button.is_clicked(event.pos):
+                individual.vac_b = 1 - individual.vac_b
+            if vac_c_button.is_clicked(event.pos):
+                individual.vac_c = 1 - individual.vac_c
+
+            if sympt_a_button.is_clicked(event.pos):    #toggle symptom status
+                individual.sympt_a = 1 - individual.sympt_a
+            if sympt_b_button.is_clicked(event.pos):
+                individual.sympt_b = 1 - individual.sympt_b
+            if sympt_c_button.is_clicked(event.pos):
+                individual.sympt_c = 1 - individual.sympt_c
+
 
             if prev_button.is_clicked(event.pos):   #go to previous individual, if at index 0, goes to index 14
                 current_index = (current_index - 1) % len(group.individuals)
