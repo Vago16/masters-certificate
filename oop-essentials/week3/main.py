@@ -119,7 +119,9 @@ while True:
         
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if save_button.is_clicked(event.pos):
-                pass
+                individual.name = input_name.get_text()
+                individual.last_name = input_last_name.get_text()
+                individual.address = input_address.get_text()
 
             if prev_button.is_clicked(event.pos):   #go to previous individual, if at index 0, goes to index 14
                 current_index = (current_index - 1) % len(group.individuals)
