@@ -3,7 +3,7 @@ from pygame.locals import *
 
 BLACK = (0,0,0)
 
-class TextInputBox:
+class TextBox:
     def __init__(self, x, y, w, h, font):
         self.rect = pygame.Rect(x, y, w, h)
         self.color = pygame.Color('black')
@@ -14,6 +14,7 @@ class TextInputBox:
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:        #if box was clicked
             self.active = self.rect.collidepoint(event.pos)
+            
         elif event.type == pygame.KEYDOWN and self.active:
             if event.key == pygame.K_BACKSPACE:     #enables backspace to remove a character
                 self.text = self.text[:-1]
@@ -27,3 +28,7 @@ class TextInputBox:
 
     def get_text(self):
         return self.text
+    
+    def set_text(self, text):
+        #updates text
+        self.text = text
