@@ -7,6 +7,8 @@
 import pygame
 from pygame.locals import *
 
+BLACK = (0,0,0)
+
 class SimpleButton:
     def __init__(self, window, x, y, w, h, text, font):
         self.window = window
