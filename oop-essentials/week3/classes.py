@@ -148,7 +148,7 @@ class Individual:
 
 class Group:
     #class that has 15 Individual objects and uses them to track vaccine status
-    def __init__(self, num_individuals = 1):    
+    def __init__(self, num_individuals=1):          # KEYWORD AND POSITIONAL ARGUMENT REQUIREMENT
         self.individuals = []       #initialize list for Individual objects, with placeholders for name, last_name, and address
         for i in range(num_individuals):
             self.individuals.append(Individual(i, 'Name{0}'.format(i), 'Last_Name{0}'.format(i), 'Address{0}'.format(i)))
@@ -198,10 +198,11 @@ class Group:
             total_vac_b += i.vac_b      
             total_vac_c += i.vac_c
 
-        print(' Vaccine totals:')
-        print('     vac_a: {0}'.format(total_vac_a))
-        print('     vac_b: {0}'.format(total_vac_b))
-        print('     vac_c: {0}'.format(total_vac_c))
+        results = [' Vaccine totals:',
+                    '     Johnson: {0}'.format(total_vac_a),
+                    '     Moderna: {0}'.format(total_vac_b),
+                    '     Pfizer: {0}'.format(total_vac_c)]
+        return results
 
     def report_symptoms_per_vacc(self):
         #report symptom data for each vaccination type
@@ -243,22 +244,23 @@ class Group:
                 if i.sympt_c:
                     total_vac_c_sympt_c += i.sympt_c
 
-        print(' Symptom totals per vaccine:')
-        print('     **vac_a**')
-        print('         sympt_a: {0}'.format(total_vac_a_sympt_a))
-        print('         sympt_b: {0}'.format(total_vac_a_sympt_b))
-        print('         sympt_c: {0}'.format(total_vac_a_sympt_c))
+        #now returns a list so it can be printed to the GUI
+        results = [' Symptom totals per vaccine:', 
+                   '     **vac_a**',
+                    '         sympt_a: {0}'.format(total_vac_a_sympt_a),
+                    '         sympt_b: {0}'.format(total_vac_a_sympt_b),
+                    '         sympt_c: {0}'.format(total_vac_a_sympt_c),
 
-        print('     **vac_b**')
-        print('         sympt_a: {0}'.format(total_vac_b_sympt_a))
-        print('         sympt_b: {0}'.format(total_vac_b_sympt_b))
-        print('         sympt_c: {0}'.format(total_vac_b_sympt_c))
+                    '     **vac_b**',
+                    '         sympt_a: {0}'.format(total_vac_b_sympt_a),
+                    '         sympt_b: {0}'.format(total_vac_b_sympt_b),
+                    '         sympt_c: {0}'.format(total_vac_b_sympt_c),
 
-        print('     **vac_c**')
-        print('         sympt_a: {0}'.format(total_vac_c_sympt_a))
-        print('         sympt_b: {0}'.format(total_vac_c_sympt_b))
-        print('         sympt_c: {0}'.format(total_vac_c_sympt_c))
-                        
+                    '     **vac_c**',
+                    '         sympt_a: {0}'.format(total_vac_c_sympt_a),
+                    '         sympt_b: {0}'.format(total_vac_c_sympt_b),
+                    '         sympt_c: {0}'.format(total_vac_c_sympt_c)]
+        return results     
 
     def reset(self):
         #set all vaccine statuses to 0(false) along with symptom statuses

@@ -63,6 +63,8 @@ def turns_green(i):
 
 group = Group()    #create instance of group class 
 current_index = 0       #track the individual in the group that is selected
+report_vacc_status_is_visible = False
+report_vacc_status_surfaces = []
 
 #create instances of back and next buttons
 prev_button = SimpleButton(window, 20, 20, 80, 30, "Back", font)
@@ -100,7 +102,7 @@ sympt_b_button = SimpleButton(window, 680, 100, 20, 20, None, font)
 sympt_c_button = SimpleButton(window, 680, 120, 20, 20, None, font)
 
 
-#creat instances of textboxes
+#create instances of textboxes for input
 input_name = TextBox(150, 300, 140, 30, font)
 input_last_name = TextBox(350, 300, 140, 30, font)
 input_address = TextBox(550, 300, 200, 30, font)
@@ -113,6 +115,11 @@ individual = group.individuals[current_index]
 input_name.set_text("First Name")
 input_last_name.set_text("Last Name")
 input_address.set_text("Address")
+
+#create textbox for first r key (initially hidden)
+v_input_box = TextBox(500, 400, 200, 30, font)
+v_active = False   #if textbox is visible or not, set to invisible at first
+
 
 #labels for TextBox instances
 name_label = font.render("Name:", True, BLACK)
@@ -175,7 +182,7 @@ while True:
     window.blit(sympt_b_window, (400, 100))
     window.blit(sympt_c_window, (400, 120))
 
-    #add labels
+    #add labels for input
     window.blit(name_label, (150, 255))
     window.blit(last_name_label, (350, 255))
     window.blit(address_label, (550, 255))
@@ -190,10 +197,14 @@ while True:
             pygame.quit()
             sys.exit()
         
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_r:
+                v_active = not v_active  #show the textbox
+
         elif event.type == pygame.MOUSEBUTTONDOWN:
 
             if vac_a_button.is_clicked(event.pos):      #toggle vaccine status
-                individual.vac_a = 1 - individual.vac_a  # Flip between 0 and 1
+                individual.vac_a = 1 - individual.vac_a  #flip between 0 and 1
             if vac_b_button.is_clicked(event.pos):
                 individual.vac_b = 1 - individual.vac_b
             if vac_c_button.is_clicked(event.pos):
@@ -226,6 +237,19 @@ while True:
             if add_button.is_clicked(event.pos):    #add button adds a new indiviudal    
                 add_ind()
 
+            if report_vacc_status_button.is_clicked(event.pos):
+                pass 
+
+            if report_vacc_total_button.is_clicked(event.pos):
+                report_vacc_status_lines = group.report_total_vacc()
+                report_vacc_status_surfaces = []
+                for line in report_vacc_status_lines:   #goes thru each elemetn in report_total_vacc list
+                    now_rendered = font.render(line, True, BLACK)
+                    report_vacc_status_surfaces.append(now_rendered)
+                report_vacc_status_is_visible = True  #sets it so text can be written later   
+
+            if report_sympt_button.is_clicked(event.pos):       
+                pass
             if reset_button.is_clicked(event.pos):
                 group.reset()
 
@@ -236,12 +260,25 @@ while True:
         #handle events in boxes
         for box in input_boxes:
             box.handle_event(event)
+
+        if v_active:        #allows textbox to handle input
+            v_input_box.handle_event(event)
+
+    if report_vacc_status_is_visible == True:
+        y = 400
+        for i in report_vacc_status_surfaces:     #iterates through and prints output to GUI, each line down by a set amount
+            window.blit(i, (500, y))
+            y += 30
+
         
     #check if circle should be green, and draw accordingly
     if turns_green(individual) == True:
         pygame.draw.circle(window, GREEN, (180, 70), 10)
     else:
         pygame.draw.circle(window, RED, (180, 70), 10)
+
+    if v_active == True:    #draws the textbox if its corresponding button has been pressed
+        v_input_box.draw(window)
 
     #Update the window
     pygame.display.update()
