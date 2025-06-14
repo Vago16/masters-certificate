@@ -29,11 +29,19 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont("None", 30)
 
 #3 define functions
-def save_data():
+def save_data(individual):
     #save input data into attributes
     individual.name = input_name.get_text()
     individual.last_name = input_last_name.get_text()
     individual.address = input_address.get_text()
+
+def add_ind():
+    #add button appends a new individual to the list, ready to put in data
+    new_ind = Individual(len(group.individuals), '', '', '')
+    group.individuals.append(new_ind)
+    input_name.set_text('')
+    input_last_name.set_text('')
+    input_address.set_text('')
 
 def toggle_to_text(val):
     #change binary to yes/no
@@ -47,8 +55,7 @@ def turns_green(i):
     #the variable i in this function stands for individual
     if (i.vac_a == True and i.vac_b == True and i.vac_c == True) and (i.sympt_a != True and i.sympt_b != True and i.sympt_c != True):
         return True
-    else:
-        pass
+    return False
 
 # 4 - Load assets: image(s), sounds, etc.
 
@@ -61,11 +68,11 @@ current_index = 0       #track the individual in the group that is selected
 prev_button = SimpleButton(window, 20, 20, 80, 30, "Back", font)
 next_button = SimpleButton(window, 120, 20, 80, 30, "Next", font)
 
-#create instance of add button for new individuals
-
-
 #create instance of save button
 save_button = SimpleButton(window, 220, 20, 80, 30, "Save", font)
+
+#create instance of add button for new individuals
+add_button = SimpleButton(window, 320, 20, 100, 30, "Add New", font)
 
 #create instance of report vacc status button
 report_vacc_status_button = SimpleButton(window, 40, 350, 200, 20, "r– report vacc data", font)
@@ -119,6 +126,7 @@ while True:
     #draw the buttons
     prev_button.draw()
     next_button.draw()
+    add_button.draw()
     save_button.draw()
     vac_a_button.draw()
     vac_b_button.draw()
@@ -136,8 +144,8 @@ while True:
     individual = group.individuals[current_index]   #get current individual from the group
     #show name of individual
     name_text = "Individual {0}: {1} {2}".format(current_index + 1, 
-                                                 "First Name", 
-                                                 "Last Name")
+                                                 individual.name, 
+                                                 individual.last_name)
     name_window =font.render(name_text, True, BLACK)    #render name
     window.blit(name_window, (200,60))      #show name on window
 
@@ -183,8 +191,6 @@ while True:
             sys.exit()
         
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if save_button.is_clicked(event.pos):   #save button saves input
-                save_data()
 
             if vac_a_button.is_clicked(event.pos):      #toggle vaccine status
                 individual.vac_a = 1 - individual.vac_a  # Flip between 0 and 1
@@ -213,6 +219,12 @@ while True:
                 input_name.set_text(individual.name)
                 input_last_name.set_text(individual.last_name)
                 input_address.set_text(individual.address)
+
+            if save_button.is_clicked(event.pos):   #save button saves input
+                save_data(individual)
+
+            if add_button.is_clicked(event.pos):    #add button adds a new indiviudal    
+                add_ind()
 
             if reset_button.is_clicked(event.pos):
                 group.reset()
