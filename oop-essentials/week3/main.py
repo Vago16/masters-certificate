@@ -61,6 +61,9 @@ current_index = 0       #track the individual in the group that is selected
 prev_button = SimpleButton(window, 20, 20, 80, 30, "Back", font)
 next_button = SimpleButton(window, 120, 20, 80, 30, "Next", font)
 
+#create instance of add button for new individuals
+
+
 #create instance of save button
 save_button = SimpleButton(window, 220, 20, 80, 30, "Save", font)
 
@@ -100,9 +103,9 @@ input_boxes = [input_name, input_last_name, input_address]
 
 #puts the info from textboxes into the attributes
 individual = group.individuals[current_index]
-input_name.set_text(individual.name)
-input_last_name.set_text(individual.last_name)
-input_address.set_text(individual.address)
+input_name.set_text("First Name")
+input_last_name.set_text("Last Name")
+input_address.set_text("Address")
 
 #labels for TextBox instances
 name_label = font.render("Name:", True, BLACK)
@@ -133,8 +136,8 @@ while True:
     individual = group.individuals[current_index]   #get current individual from the group
     #show name of individual
     name_text = "Individual {0}: {1} {2}".format(current_index + 1, 
-                                                 individual.name, 
-                                                 individual.last_name)
+                                                 "First Name", 
+                                                 "Last Name")
     name_window =font.render(name_text, True, BLACK)    #render name
     window.blit(name_window, (200,60))      #show name on window
 
@@ -224,9 +227,9 @@ while True:
         
     #check if circle should be green, and draw accordingly
     if turns_green(individual) == True:
-        pygame.draw.circle(window, GREEN, (550, 70), 10)
+        pygame.draw.circle(window, GREEN, (180, 70), 10)
     else:
-        pygame.draw.circle(window, RED, (550, 70), 10)
+        pygame.draw.circle(window, RED, (180, 70), 10)
 
     #Update the window
     pygame.display.update()

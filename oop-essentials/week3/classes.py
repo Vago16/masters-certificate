@@ -148,7 +148,7 @@ class Individual:
 
 class Group:
     #class that has 15 Individual objects and uses them to track vaccine status
-    def __init__(self, num_individuals = 15):    
+    def __init__(self, num_individuals = 1):    
         self.individuals = []       #initialize list for Individual objects, with placeholders for name, last_name, and address
         for i in range(num_individuals):
             self.individuals.append(Individual(i, 'Name{0}'.format(i), 'Last_Name{0}'.format(i), 'Address{0}'.format(i)))
