@@ -1,4 +1,4 @@
-# Module 2  Assignment
+# Module 3 Assignment
 # Main file
 # Evagelos Petropoulos
 # U75564437
@@ -15,8 +15,10 @@ import sys
 # Define constants
 GRAY = (200, 200, 200)
 BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
 WINDOW_WIDTH = 1000
-WINDOW_HEIGHT = 400
+WINDOW_HEIGHT = 600
 FRAMES_PER_SECOND = 30 
 
 # 2 - Initialize the world
@@ -39,6 +41,15 @@ def toggle_to_text(val):
         return "Yes"
     else:
         return "No"
+    
+def turns_green(i):
+    #turns circle green if individual has all three vaccines and no symptoms
+    #the variable i in this function stands for individual
+    if (i.vac_a == True and i.vac_b == True and i.vac_c == True) and (i.sympt_a != True and i.sympt_b != True and i.sympt_c != True):
+        return True
+    else:
+        pass
+
 # 4 - Load assets: image(s), sounds, etc.
 
 # 5 - Initialize variables
@@ -52,6 +63,21 @@ next_button = SimpleButton(window, 120, 20, 80, 30, "Next", font)
 
 #create instance of save button
 save_button = SimpleButton(window, 220, 20, 80, 30, "Save", font)
+
+#create instance of report vacc status button
+report_vacc_status_button = SimpleButton(window, 40, 350, 200, 20, "r– report vacc data", font)
+
+#create instance of report vacc totals button
+report_vacc_total_button = SimpleButton(window, 40, 400, 200, 20, "v– report vacc total", font)
+
+#create instance of report symptom button
+report_sympt_button = SimpleButton(window, 40, 450, 200, 20, "s–report sympt total", font)
+
+#create instance of reset button
+reset_button = SimpleButton(window, 40, 500, 200, 20, "r– resets statuses", font)
+
+#create instance of quit button
+quit_button = SimpleButton(window, 40, 550, 200, 20, "q- quit program", font)
 
 #create instances of vaccine buttons to toggle status
 vac_a_button = SimpleButton(window, 360, 80, 20, 20, None, font)
@@ -97,6 +123,12 @@ while True:
     sympt_a_button.draw()
     sympt_b_button.draw()
     sympt_c_button.draw()
+
+    report_vacc_status_button.draw()
+    report_vacc_total_button.draw()
+    report_sympt_button.draw()
+    reset_button.draw()
+    quit_button.draw()
 
     individual = group.individuals[current_index]   #get current individual from the group
     #show name of individual
@@ -165,7 +197,6 @@ while True:
             if sympt_c_button.is_clicked(event.pos):
                 individual.sympt_c = 1 - individual.sympt_c
 
-
             if prev_button.is_clicked(event.pos):   #go to previous individual, if at index 0, goes to index 14
                 current_index = (current_index - 1) % len(group.individuals)
                 individual = group.individuals[current_index]
@@ -179,10 +210,23 @@ while True:
                 input_name.set_text(individual.name)
                 input_last_name.set_text(individual.last_name)
                 input_address.set_text(individual.address)
+
+            if reset_button.is_clicked(event.pos):
+                group.reset()
+
+            if quit_button.is_clicked(event.pos):   #q button quits the window
+                pygame.quit()
+                sys.exit()
+
         #handle events in boxes
         for box in input_boxes:
             box.handle_event(event)
         
+    #check if circle should be green, and draw accordingly
+    if turns_green(individual) == True:
+        pygame.draw.circle(window, GREEN, (550, 70), 10)
+    else:
+        pygame.draw.circle(window, RED, (550, 70), 10)
 
     #Update the window
     pygame.display.update()

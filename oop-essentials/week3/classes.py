@@ -1,4 +1,4 @@
-# Module 2  Assignment
+# Module 3  Assignment
 # Classes file
 # Evagelos Petropoulos
 # U75564437
@@ -137,6 +137,15 @@ class Individual:
         else:
             print('     sympt_c: No')
 
+    def reset(self):
+        #resets the individual
+        self.vac_a = 0
+        self.vac_b = 0
+        self.vac_c = 0
+        self.sympt_a = 0
+        self.sympt_b = 0
+        self.sympt_c = 0
+
 class Group:
     #class that has 15 Individual objects and uses them to track vaccine status
     def __init__(self, num_individuals = 15):    
@@ -254,12 +263,7 @@ class Group:
     def reset(self):
         #set all vaccine statuses to 0(false) along with symptom statuses
         for i in self.individuals:
-            i.vac_a = 0
-            i.vac_b = 0
-            i.vac_c = 0
-            i.sympt_a = 0
-            i.sympt_b = 0
-            i.sympt_c = 0
+            i.reset()
         print(" All vaccinations and symptom data have been reset")
 
     def start(self):
