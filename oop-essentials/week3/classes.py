@@ -1,4 +1,4 @@
-# Module 3  Assignment
+# Module 3 Assignment
 # Classes file
 # Evagelos Petropoulos
 # U75564437

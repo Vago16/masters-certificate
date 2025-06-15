@@ -1,5 +1,6 @@
-# Module 3 Assignment
+# Module 4 Assignment
 # Main file
+# Use of abstract base class and polymorphism in the inheritance of the abstract base class Person to the class Indidividual
 # Evagelos Petropoulos
 # U75564437
 
@@ -30,16 +31,16 @@ font = pygame.font.SysFont("None", 30)
 
 #3 define functions
 def save_data(individual):
-    #save input data into attributes
-    individual.name = input_name.get_text()
-    individual.last_name = input_last_name.get_text()
-    individual.address = input_address.get_text()
+    #save input data into attributes using setters
+    individual.set_name(input_name.get_text())
+    individual.set_last_name(input_last_name.get_text())
+    individual.set_address(input_address.get_text())
 
 def add_ind():
     #add button appends a new individual to the list, ready to put in data
-    new_ind = Individual(len(group.individuals), '', '', '')
-    group.individuals.append(new_ind)
-    input_name.set_text('')
+    new_ind = Individual(len(group.get_individuals()), '', '', '')
+    group.add_individual(new_ind)
+    input_name.set_text('') #pygwidgets
     input_last_name.set_text('')
     input_address.set_text('')
 
@@ -53,18 +54,19 @@ def toggle_to_text(val):
 def turns_green(i):
     #turns circle green if individual has all three vaccines and no symptoms
     #the variable i in this function stands for individual
-    if (i.vac_a == True and i.vac_b == True and i.vac_c == True) and (i.sympt_a != True and i.sympt_b != True and i.sympt_c != True):
+    if (i.get_vac_a() == True and i.get_vac_b() == True and i.get_vac_c() == True) and \
+       (i.get_sympt_a() != True and i.get_sympt_b() != True and i.get_sympt_c() != True):
         return True
     return False
 
 def hide_other_fields():
         #turn flags off for other output fields(ie make them invisible)
-        global v_active     #global to fetch variable statements from further down in code, so definition statement can be with others
+        global v_active
         global r_active
         global report_vacc_status_is_visible
         global report_sympt_is_visible
 
-        v_active = False    #set all to false
+        v_active = False
         r_active = False
         report_vacc_status_is_visible = False
         report_sympt_is_visible = False
@@ -78,7 +80,7 @@ current_index = 0       #track the individual in the group that is selected
 
 #create variables for -v button (initially hidden)
 v_input_box = TextBox(500, 400, 200, 30, font)
-v_active = False   #if textbox is visible or not, set to invisible at first
+v_active = False
 report_vacc_status_is_visible = False
 report_vacc_status_surfaces = []
 
@@ -98,7 +100,7 @@ next_button = SimpleButton(window, 120, 20, 80, 30, "Next", font)
 #create instance of save button
 save_button = SimpleButton(window, 220, 20, 80, 30, "Save", font)
 
-#create instance of add button for new individuals
+#create instance of add button for new individuals; after pressing, have to select next button to navigate to instance of individual created
 add_button = SimpleButton(window, 320, 20, 100, 30, "Add New", font)
 
 #create instance of report vacc status button
@@ -135,8 +137,8 @@ input_address = TextBox(550, 300, 200, 30, font)
 #list of TextBox instances
 input_boxes = [input_name, input_last_name, input_address]
 
-#puts the info from textboxes into the attributes
-individual = group.individuals[current_index]
+#puts the info from textboxes into the attributes (use getters)
+individual = group.get_individual(current_index)
 input_name.set_text("First Name")
 input_last_name.set_text("Last Name")
 input_address.set_text("Address")
@@ -168,18 +170,18 @@ while True:
     reset_button.draw()
     quit_button.draw()
 
-    individual = group.individuals[current_index]   #get current individual from the group
-    #show name of individual
+    individual = group.get_individual(current_index)   #get current individual from the group
+    #show name of individual using getters
     name_text = "Individual {0}: {1} {2}".format(current_index + 1, 
-                                                 individual.name, 
-                                                 individual.last_name)
+                                                 individual.get_name(), 
+                                                 individual.get_last_name())
     name_window =font.render(name_text, True, BLACK)    #render name
     window.blit(name_window, (200,60))      #show name on window
 
-    #show vaccine statuses of individual(added names to vaccine to make easier to differentiate(also in alphabetical order))
-    vac_a_text = "Vaccine A (Johnson): {}".format(toggle_to_text(individual.vac_a))
-    vac_b_text = "Vaccine B (Moderna): {}".format(toggle_to_text(individual.vac_b))
-    vac_c_text = "Vaccine C (Pfizer): {}".format(toggle_to_text(individual.vac_c))
+    #show vaccine statuses of individual(added names to vaccine to make easier to differentiate(also in alphabetical order)) using getters
+    vac_a_text = "Vaccine A (Johnson): {}".format(toggle_to_text(individual.get_vac_a()))
+    vac_b_text = "Vaccine B (Moderna): {}".format(toggle_to_text(individual.get_vac_b()))
+    vac_c_text = "Vaccine C (Pfizer): {}".format(toggle_to_text(individual.get_vac_c()))
 
     vac_a_window = font.render(vac_a_text, True, BLACK)
     vac_b_window = font.render(vac_b_text, True, BLACK)
@@ -189,10 +191,10 @@ while True:
     window.blit(vac_b_window, (100, 100))
     window.blit(vac_c_window, (100, 120))
 
-    #show symptom statuses of individual(added names to symptoms to make easier to differentiate(also in alphabetical order)
-    sympt_a_text = "Symptom A (Coughing): {}".format(toggle_to_text(individual.sympt_a))
-    sympt_b_text = "Symptom B (Fever): {}".format(toggle_to_text(individual.sympt_b))
-    sympt_c_text = "Symptom C (Nausea): {}".format(toggle_to_text(individual.sympt_c))
+    #show symptom statuses of individual(added names to symptoms to make easier to differentiate(also in alphabetical order)) using getters
+    sympt_a_text = "Symptom A (Coughing): {}".format(toggle_to_text(individual.get_sympt_a()))
+    sympt_b_text = "Symptom B (Fever): {}".format(toggle_to_text(individual.get_sympt_b()))
+    sympt_c_text = "Symptom C (Nausea): {}".format(toggle_to_text(individual.get_sympt_c()))
 
     sympt_a_window = font.render(sympt_a_text, True, BLACK)
     sympt_b_window = font.render(sympt_b_text, True, BLACK)
@@ -226,33 +228,33 @@ while True:
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
 
-            if vac_a_button.is_clicked(event.pos):      #toggle vaccine status
-                individual.vac_a = 1 - individual.vac_a  #flip between 0 and 1
+            if vac_a_button.is_clicked(event.pos):      #toggle vaccine status using getters/setters
+                individual.set_vac_a(1 - individual.get_vac_a())  #flip between 0 and 1
             if vac_b_button.is_clicked(event.pos):
-                individual.vac_b = 1 - individual.vac_b
+                individual.set_vac_b(1 - individual.get_vac_b())
             if vac_c_button.is_clicked(event.pos):
-                individual.vac_c = 1 - individual.vac_c
+                individual.set_vac_c(1 - individual.get_vac_c())
 
-            if sympt_a_button.is_clicked(event.pos):    #toggle symptom status
-                individual.sympt_a = 1 - individual.sympt_a
+            if sympt_a_button.is_clicked(event.pos):    #toggle symptom status using getters/setters
+                individual.set_sympt_a(1 - individual.get_sympt_a())
             if sympt_b_button.is_clicked(event.pos):
-                individual.sympt_b = 1 - individual.sympt_b
+                individual.set_sympt_b(1 - individual.get_sympt_b())
             if sympt_c_button.is_clicked(event.pos):
-                individual.sympt_c = 1 - individual.sympt_c
+                individual.set_sympt_c(1 - individual.get_sympt_c())
 
-            if prev_button.is_clicked(event.pos):   #go to previous individual, if at index 0, goes to index 14
-                current_index = (current_index - 1) % len(group.individuals)
-                individual = group.individuals[current_index]
-                input_name.set_text(individual.name)
-                input_last_name.set_text(individual.last_name)
-                input_address.set_text(individual.address)
+            if prev_button.is_clicked(event.pos):   #go to previous individual, wraps around
+                current_index = (current_index - 1) % len(group.get_individuals())
+                individual = group.get_individual(current_index)
+                input_name.set_text(individual.get_name())
+                input_last_name.set_text(individual.get_last_name())
+                input_address.set_text(individual.get_address())
 
-            if next_button.is_clicked(event.pos):   #go to next individual, if at index 14, goes to index 0
-                current_index = (current_index + 1) % len(group.individuals)
-                individual = group.individuals[current_index]
-                input_name.set_text(individual.name)
-                input_last_name.set_text(individual.last_name)
-                input_address.set_text(individual.address)
+            if next_button.is_clicked(event.pos):   #go to next individual, wraps around
+                current_index = (current_index + 1) % len(group.get_individuals())
+                individual = group.get_individual(current_index)
+                input_name.set_text(individual.get_name())
+                input_last_name.set_text(individual.get_last_name())
+                input_address.set_text(individual.get_address())
 
             if save_button.is_clicked(event.pos):   #save button saves input
                 save_data(individual)
@@ -267,8 +269,8 @@ while True:
 
                 try:
                     num = int(r_input_box.get_text())
-                    if 1 <= num <= len(group.individuals):
-                        indiv = group.individuals[num - 1]
+                    if 1 <= num <= len(group.get_individuals()):
+                        indiv = group.get_individual(num - 1)
                         r_output_text = indiv.report_individual_vacc()
                         r_output_lines = r_output_text.split('\n')
                         for line in r_output_lines:     #write to GUI
@@ -350,3 +352,4 @@ while True:
 
     #Slow things down a bit
     clock.tick(FRAMES_PER_SECOND)  # make pygame wait
+

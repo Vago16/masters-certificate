@@ -1,11 +1,14 @@
 # Module 3 Assignment
 # Main file
+# Class __init__() are private in classes.py, SimpleButton.py, and Textbox.py
+# Keyword and Positional example argument found in classes.py in the __init__() method of Group class
 # Evagelos Petropoulos
 # U75564437
 
 
 # 1 - Import packages
 import pygame
+import pygwidgets
 from pygame.locals import *
 from SimpleButton import *
 from classes import *
