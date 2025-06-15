@@ -17,8 +17,8 @@ GRAY = (200, 200, 200)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
-WINDOW_WIDTH = 1000
-WINDOW_HEIGHT = 600
+WINDOW_WIDTH = 1150
+WINDOW_HEIGHT = 800
 FRAMES_PER_SECOND = 30 
 
 # 2 - Initialize the world
@@ -63,8 +63,17 @@ def turns_green(i):
 
 group = Group()    #create instance of group class 
 current_index = 0       #track the individual in the group that is selected
+
+#create variables for -v button (initially hidden)
+v_input_box = TextBox(500, 400, 200, 30, font)
+v_active = False   #if textbox is visible or not, set to invisible at first
 report_vacc_status_is_visible = False
 report_vacc_status_surfaces = []
+
+#create variables -r first button(initially hidden)
+r_input_box = TextBox(500, 350, 200, 30, font)  
+r_active = False
+r_output_surfaces = []
 
 #create instances of back and next buttons
 prev_button = SimpleButton(window, 20, 20, 80, 30, "Back", font)
@@ -115,11 +124,6 @@ individual = group.individuals[current_index]
 input_name.set_text("First Name")
 input_last_name.set_text("Last Name")
 input_address.set_text("Address")
-
-#create textbox for first r key (initially hidden)
-v_input_box = TextBox(500, 400, 200, 30, font)
-v_active = False   #if textbox is visible or not, set to invisible at first
-
 
 #labels for TextBox instances
 name_label = font.render("Name:", True, BLACK)
@@ -198,8 +202,11 @@ while True:
             sys.exit()
         
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_v:
+                v_active = not v_active  #show the textbox for -v key
             if event.key == pygame.K_r:
-                v_active = not v_active  #show the textbox
+                r_active = not r_active  # Toggle display of the r_input_box
+
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
 
@@ -238,7 +245,21 @@ while True:
                 add_ind()
 
             if report_vacc_status_button.is_clicked(event.pos):
-                pass 
+                r_active = True     #makes textbox visible
+                r_output_surfaces = []  #clear input
+                try:
+                    num = int(r_input_box.get_text())
+                    if 1 <= num <= len(group.individuals):
+                        indiv = group.individuals[num - 1]
+                        r_output_text = indiv.report_individual_vacc()
+                        r_output_lines = r_output_text.split('\n')
+                        for line in r_output_lines:     #write to GUI
+                            surface = font.render(line, True, BLACK)
+                            r_output_surfaces.append(surface)
+                    else:
+                        r_output_surfaces = [font.render("Number inputted is out of range", True, RED)]
+                except ValueError:
+                    r_output_surfaces = [font.render("Click the button again to generate report of a valid individual.", True, RED)]
 
             if report_vacc_total_button.is_clicked(event.pos):
                 report_vacc_status_lines = group.report_total_vacc()
@@ -261,8 +282,12 @@ while True:
         for box in input_boxes:
             box.handle_event(event)
 
-        if v_active:        #allows textbox to handle input
-            v_input_box.handle_event(event)
+        if r_active:        # allows r textbox to handle input
+            r_input_box.handle_event(event)  
+
+        if v_active:        #allows v textbox to handle input
+            v_input_box.handle_event(event)  
+
 
     if report_vacc_status_is_visible == True:
         y = 400
@@ -279,6 +304,14 @@ while True:
 
     if v_active == True:    #draws the textbox if its corresponding button has been pressed
         v_input_box.draw(window)
+
+    if r_active:
+        r_input_box.draw(window)
+        generate_report = font.render('Click the button again to generate report', True, BLACK)
+        y = 400  # Adjust vertical position
+        for line_surface in r_output_surfaces:
+            window.blit(line_surface, (500, y))  # Adjust x/y position
+            y += 30
 
     #Update the window
     pygame.display.update()

@@ -97,26 +97,28 @@ class Individual:
 
 
     def report_individual_vacc(self):
-        #returns what vaccines an individual does and does not have
-        print('\nIndividual {0} vaccination data\n'.format(self.id + 1))
-        print(' First Name: {0}'.format(self.name))
-        print(' Last Name: {0}'.format(self.last_name))
-        print(' Address: {0}'.format(self.address))
+        #returns a list of what vaccines an individual does and does not have
+        lines = ['\nIndividual {0} vaccination data\n'.format(self.id + 1),
+            ' First Name: {0}'.format(self.name),
+            ' Last Name: {0}'.format(self.last_name),
+            ' Address: {0}'.format(self.address)]
 
         if self.vac_a:        #if self.vac_a == 1(True)
-            print('     vac_a: Yes')
+            lines.append('     vac_a: Yes')
         else:
-            print('     vac_a: No')
+            lines.append('     vac_a: No')
 
         if self.vac_b:
-            print('     vac_b: Yes')
+            lines.append('     vac_b: Yes')
         else:
-            print('     vac_b: No')
+            lines.append('     vac_b: No')
 
         if self.vac_c:
-            print('     vac_c: Yes')
+            lines.append('     vac_c: Yes')
         else:
-            print('     vac_c: No')
+            lines.append('     vac_c: No')
+
+        return '\n'.join(lines)
 
     def report_individual_symptoms(self):
         #returns what symptoms an individual does and does not have
@@ -171,21 +173,13 @@ class Group:
             individual.check_symptom()
             individual.identifying_info()
 
-    def report_from_group_vacc(self):
+    def report_from_group_vacc(self, individual_num):
         #returns vaccine data for a selected Individual object
-        while True:
-            try:
-                individual_num = int(input('    Enter the number of the individual(1-15): '))
                 if 1 <= individual_num <= len(self.individuals):
-                    self.individuals[individual_num - 1].report_individual_vacc()
-
-                    break
+                    return self.individuals[individual_num - 1].report_individual_vacc()
                 else:
-                    print(' Please enter in a number between 1-15')
+                    return 'Please enter a number of an individual that exists'
 
-            except ValueError:
-                print(' Please enter in a number between 1-15')
-    
     def report_total_vacc(self):
         #report vaccination totals for each vaccination type
         #initialize totals of each vaccine
