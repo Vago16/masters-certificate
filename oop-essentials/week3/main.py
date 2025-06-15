@@ -57,6 +57,18 @@ def turns_green(i):
         return True
     return False
 
+def hide_other_fields():
+        #turn flags off for other output fields(ie make them invisible)
+        global v_active     #global to fetch variable statements from further down in code, so definition statement can be with others
+        global r_active
+        global report_vacc_status_is_visible
+        global report_sympt_is_visible
+
+        v_active = False    #set all to false
+        r_active = False
+        report_vacc_status_is_visible = False
+        report_sympt_is_visible = False
+
 # 4 - Load assets: image(s), sounds, etc.
 
 # 5 - Initialize variables
@@ -74,6 +86,10 @@ report_vacc_status_surfaces = []
 r_input_box = TextBox(500, 350, 200, 30, font)  
 r_active = False
 r_output_surfaces = []
+
+#create variables -s first button(initially hidden)
+report_sympt_surfaces = []
+report_sympt_is_visible = False
 
 #create instances of back and next buttons
 prev_button = SimpleButton(window, 20, 20, 80, 30, "Back", font)
@@ -245,8 +261,10 @@ while True:
                 add_ind()
 
             if report_vacc_status_button.is_clicked(event.pos):
+                hide_other_fields() #makes other fields invisible
                 r_active = True     #makes textbox visible
                 r_output_surfaces = []  #clear input
+
                 try:
                     num = int(r_input_box.get_text())
                     if 1 <= num <= len(group.individuals):
@@ -263,14 +281,22 @@ while True:
 
             if report_vacc_total_button.is_clicked(event.pos):
                 report_vacc_status_lines = group.report_total_vacc()
+                hide_other_fields() #makes other fields invisible
                 report_vacc_status_surfaces = []
                 for line in report_vacc_status_lines:   #goes thru each elemetn in report_total_vacc list
                     now_rendered = font.render(line, True, BLACK)
                     report_vacc_status_surfaces.append(now_rendered)
                 report_vacc_status_is_visible = True  #sets it so text can be written later   
 
-            if report_sympt_button.is_clicked(event.pos):       
-                pass
+            if report_sympt_button.is_clicked(event.pos):  
+                hide_other_fields() #makes other fields invisible  
+                report_sympt_lines = group.report_symptoms_per_vacc()
+                report_sympt_surfaces = []
+                for line in report_sympt_lines:
+                    line_surface = font.render(line, True, BLACK)
+                    report_sympt_surfaces.append(line_surface)
+                report_sympt_is_visible = True
+                
             if reset_button.is_clicked(event.pos):
                 group.reset()
 
@@ -310,7 +336,13 @@ while True:
         generate_report = font.render('Click the button again to generate report', True, BLACK)
         y = 400  # Adjust vertical position
         for line_surface in r_output_surfaces:
-            window.blit(line_surface, (500, y))  # Adjust x/y position
+            window.blit(line_surface, (500, y))  #draw and go down by 30 for each iterable
+            y += 30
+
+    if report_sympt_is_visible:
+        y = 400
+        for surface in report_sympt_surfaces:
+            window.blit(surface, (750, y))  #draw and go down by 30 for each iterable
             y += 30
 
     #Update the window

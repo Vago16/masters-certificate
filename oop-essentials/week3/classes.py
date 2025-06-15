@@ -104,19 +104,19 @@ class Individual:
             ' Address: {0}'.format(self.address)]
 
         if self.vac_a:        #if self.vac_a == 1(True)
-            lines.append('     vac_a: Yes')
+            lines.append('     Johnson: Yes')
         else:
-            lines.append('     vac_a: No')
+            lines.append('     Johnson: No')
 
         if self.vac_b:
-            lines.append('     vac_b: Yes')
+            lines.append('     Moderna: Yes')
         else:
-            lines.append('     vac_b: No')
+            lines.append('     Moderna: No')
 
         if self.vac_c:
-            lines.append('     vac_c: Yes')
+            lines.append('     Pfizer: Yes')
         else:
-            lines.append('     vac_c: No')
+            lines.append('     Pfizer: No')
 
         return '\n'.join(lines)
 
@@ -125,19 +125,19 @@ class Individual:
         print(' Individual {0} symptom data'.format(self.id + 1))
 
         if self.sympt_a:        #if self.sympt_a == 1(True)
-            print('     sympt_a: Yes')
+            print('     Coughing: Yes')
         else:
-            print('     sympt_a: No')
+            print('     Coughing: No')
 
         if self.sympt_b:        
-            print('     sympt_b: Yes')
+            print('     Fever: Yes')
         else:
-            print('     sympt_b: No')
+            print('     Fever: No')
 
         if self.sympt_c:        
-            print('     sympt_c: Yes')
+            print('     Nausea: Yes')
         else:
-            print('     sympt_c: No')
+            print('     Nausea: No')
 
     def reset(self):
         #resets the individual
@@ -240,20 +240,20 @@ class Group:
 
         #now returns a list so it can be printed to the GUI
         results = [' Symptom totals per vaccine:', 
-                   '     **vac_a**',
-                    '         sympt_a: {0}'.format(total_vac_a_sympt_a),
-                    '         sympt_b: {0}'.format(total_vac_a_sympt_b),
-                    '         sympt_c: {0}'.format(total_vac_a_sympt_c),
+                   '     **Johnson**',
+                    '         Coughing: {0}'.format(total_vac_a_sympt_a),
+                    '         Fever: {0}'.format(total_vac_a_sympt_b),
+                    '         Nausea: {0}'.format(total_vac_a_sympt_c),
 
-                    '     **vac_b**',
-                    '         sympt_a: {0}'.format(total_vac_b_sympt_a),
-                    '         sympt_b: {0}'.format(total_vac_b_sympt_b),
-                    '         sympt_c: {0}'.format(total_vac_b_sympt_c),
+                    '     **Moderna**',
+                    '         Coughing: {0}'.format(total_vac_b_sympt_a),
+                    '         Fever: {0}'.format(total_vac_b_sympt_b),
+                    '         Nausea: {0}'.format(total_vac_b_sympt_c),
 
-                    '     **vac_c**',
-                    '         sympt_a: {0}'.format(total_vac_c_sympt_a),
-                    '         sympt_b: {0}'.format(total_vac_c_sympt_b),
-                    '         sympt_c: {0}'.format(total_vac_c_sympt_c)]
+                    '     **Pfizer**',
+                    '         Coughing: {0}'.format(total_vac_c_sympt_a),
+                    '         Fever: {0}'.format(total_vac_c_sympt_b),
+                    '         Nausea: {0}'.format(total_vac_c_sympt_c)]
         return results     
 
     def reset(self):
