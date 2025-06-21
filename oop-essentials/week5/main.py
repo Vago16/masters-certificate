@@ -1,6 +1,5 @@
 # Module 5 Assignment
 # Main file
-# Use of abstract base class and polymorphism in the inheritance of the abstract base class Person to the class Indidividual
 # Evagelos Petropoulos
 # U75564437
 

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 class Person(ABC):
-    #abstract base class to be inherited by Individual
+    #abstract base class to be INHERITED by Individual
     def __init__(self, id, name, last_name, address):
         self.id = id
         self.name = name
@@ -14,6 +14,7 @@ class Person(ABC):
 
 class Individual(Person):
     # object to be used by the class Group
+    #ENCAPSULATION
     def __init__(self, id, name, last_name, address):
         self.__id = id
         self.__vac_a = 0
@@ -27,6 +28,7 @@ class Individual(Person):
         self.__address = address
 
     #abstract base class method extended with the decorator
+    #POLYMORPHISM
     def report(self):   
         print("Name: {0} {1}".format(self.name, self.last_name))
 
