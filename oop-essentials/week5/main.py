@@ -99,10 +99,10 @@ prev_button = pygwidgets.TextButton(window, (20, 20), "Back", width=80, height=3
 next_button = pygwidgets.TextButton(window, (120, 20), "Next", width=80, height=30)
 
 #create instance of save button
-save_button = SimpleButton(window, 220, 20, 80, 30, "Save", font)
+save_button = pygwidgets.TextButton(window, (220, 20), "Save", width=80, height=30)
 
 #create instance of add button for new individuals; after pressing, have to select next button to navigate to instance of individual created
-add_button = SimpleButton(window, 320, 20, 100, 30, "Add New", font)
+add_button = pygwidgets.TextButton(window, (320, 20), "Add New", width=100, height=30)
 
 #create instance of report vacc status button
 report_vacc_status_button = SimpleButton(window, 40, 350, 200, 20, "r– report vacc data", font)
@@ -242,14 +242,6 @@ while True:
             if sympt_c_button.is_clicked(event.pos):
                 individual.set_sympt_c(1 - individual.get_sympt_c())
 
-            
-
-            if save_button.is_clicked(event.pos):   #save button saves input
-                save_data(individual)
-
-            if add_button.is_clicked(event.pos):    #add button adds a new indiviudal    
-                add_ind()
-
             if report_vacc_status_button.is_clicked(event.pos):
                 hide_other_fields() #makes other fields invisible
                 r_active = True     #makes textbox visible
@@ -294,7 +286,7 @@ while True:
                 pygame.quit()
                 sys.exit()
 
-
+        #top line of GUI buttons
         if prev_button.handleEvent(event):   #go to previous individual, wraps around
                 current_index = (current_index - 1) % len(group.get_individuals())
                 individual = group.get_individual(current_index)
@@ -308,6 +300,12 @@ while True:
             input_name.set_text(individual.get_name())
             input_last_name.set_text(individual.get_last_name())
             input_address.set_text(individual.get_address())
+
+        if save_button.handleEvent(event):   #save button saves input
+                save_data(individual)
+
+        if add_button.handleEvent(event):    #add button adds a new indiviudal    
+                add_ind()
 
         #handle events in boxes
         for box in input_boxes:
