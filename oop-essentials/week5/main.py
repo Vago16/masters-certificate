@@ -1,5 +1,6 @@
 # Module 5 Assignment
 # Main file
+# Added Timer
 # Evagelos Petropoulos
 # U75564437
 
@@ -21,6 +22,7 @@ RED = (255, 0, 0)
 WINDOW_WIDTH = 1150
 WINDOW_HEIGHT = 800
 FRAMES_PER_SECOND = 30 
+NO_ACTIVITY = 5000 #5 seconds or 5000 milliseconds
 
 # 2 - Initialize the world
 pygame.init()
@@ -135,7 +137,6 @@ sympt_a_button = pygwidgets.TextButton(window, (680, 80), "", width=20, height=2
 sympt_b_button = pygwidgets.TextButton(window, (680, 100), "", width=20, height=20)
 sympt_c_button = pygwidgets.TextButton(window, (680, 120), "", width=20, height=20)
 
-
 #create instances of textboxes for input
 input_name = TextBox(150, 300, 140, 30, font)
 input_last_name = TextBox(350, 300, 140, 30, font)
@@ -154,6 +155,10 @@ input_address.set_text("Address")
 name_label = font.render("Name:", True, BLACK)
 last_name_label = font.render("Last Name:", True, BLACK)
 address_label = font.render("Address:", True, BLACK)
+
+#create variables for TIMER
+last_activity_time = pygame.time.get_ticks()
+show_message = False
 
 # 6 - Loop forever
 while True:
@@ -220,17 +225,27 @@ while True:
     for box in input_boxes:
         box.draw(window)
 
+    #if inacivity is longer than 5 seconds, display message
+    if show_message == True:
+        inactivity_message = font.render("Please Enter Data - no input detected", True, RED)
+        window.blit(inactivity_message, (600, 30))
+
     # 7 - Check for and handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
         
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:    #registers key being pressed
             if event.key == pygame.K_v:
                 v_active = not v_active  #show the textbox for -v key
             if event.key == pygame.K_r:
                 r_active = not r_active  # Toggle display of the r_input_box
+
+        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.KEYDOWN:    #registers key or mouse being pressed
+            last_activity_time = pygame.time.get_ticks()
+            show_message = False
+
         #buttons to toggle vaccines
         if vac_a_button.handleEvent(event):        #toggle vaccine status using getters/setters
             individual.set_vac_a(1 - individual.get_vac_a())  #flip between 0 and 1
@@ -348,6 +363,13 @@ while True:
         for surface in report_sympt_surfaces:
             window.blit(surface, (750, y))  #draw and go down by 30 for each iterable
             y += 30
+
+    #checking if inactivity has passed the threshold for message to appear
+    curr_time = pygame.time.get_ticks()
+    if curr_time - last_activity_time > NO_ACTIVITY:    
+        #if the difference of the ticks in current time and the last time any 
+        #activity(click or button press) was registered is greater than 5000 milliseconds, show message
+        show_message = True
 
     #Update the window
     pygame.display.update()
