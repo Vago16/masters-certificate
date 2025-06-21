@@ -1,6 +1,6 @@
 # Module 5 Assignment
 # Main file
-# Added Timer
+# Added Timer and Animation along with previous specifications
 # Evagelos Petropoulos
 # U75564437
 
@@ -9,7 +9,6 @@
 import pygame
 import pygwidgets
 from pygame.locals import *
-from SimpleButton import *
 from classes import *
 from TextBox import *
 import sys
@@ -159,6 +158,11 @@ address_label = font.render("Address:", True, BLACK)
 #create variables for TIMER
 last_activity_time = pygame.time.get_ticks()
 show_message = False
+
+#ANIMATION with images
+fireworkAnimation = pygwidgets.SpriteSheetAnimation(window, (700, 45), 'images/fireworks.png',
+                                         35, 192, 192, .1, autoStart=False, loop=False)
+
 
 # 6 - Loop forever
 while True:
@@ -344,8 +348,12 @@ while True:
     #check if circle should be green, and draw accordingly
     if turns_green(individual) == True:
         pygame.draw.circle(window, GREEN, (180, 70), 10)
+        fireworkAnimation.start()
+        fireworkAnimation.update()       #added in firework ANIMATION when all vaccines are filled in
+        fireworkAnimation.draw()
     else:
         pygame.draw.circle(window, RED, (180, 70), 10)
+        fireworkAnimation.stop()     #stops animation
 
     if v_active == True:    #draws the textbox if its corresponding button has been pressed
         v_input_box.draw(window)
