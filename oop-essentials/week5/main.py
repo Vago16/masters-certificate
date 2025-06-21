@@ -45,6 +45,13 @@ def add_ind():
     input_last_name.set_text('')
     input_address.set_text('')
 
+def button_handle():
+    #gets individual's information when pressing respective button for prev/next
+    input_name.set_text(individual.get_name())
+    input_last_name.set_text(individual.get_last_name())
+    input_address.set_text(individual.get_address())
+
+
 def toggle_to_text(val):
     #change binary to yes/no
     if val:
@@ -105,29 +112,29 @@ save_button = pygwidgets.TextButton(window, (220, 20), "Save", width=80, height=
 add_button = pygwidgets.TextButton(window, (320, 20), "Add New", width=100, height=30)
 
 #create instance of report vacc status button
-report_vacc_status_button = SimpleButton(window, 40, 350, 200, 20, "r– report vacc data", font)
+report_vacc_status_button = pygwidgets.TextButton(window, (40, 350), "r– report vacc data", width=200, height=20)
 
 #create instance of report vacc totals button
-report_vacc_total_button = SimpleButton(window, 40, 400, 200, 20, "v– report vacc total", font)
+report_vacc_total_button = pygwidgets.TextButton(window, (40, 400), "v– report vacc total", width=200, height=20)
 
 #create instance of report symptom button
-report_sympt_button = SimpleButton(window, 40, 450, 200, 20, "s–report sympt total", font)
+report_sympt_button = pygwidgets.TextButton(window, (40, 450), "s–report sympt total", width=200, height=20)
 
 #create instance of reset button
-reset_button = SimpleButton(window, 40, 500, 200, 20, "r– resets statuses", font)
+reset_button = pygwidgets.TextButton(window, (40, 500), "r– resets statuses", width=200, height=20)
 
 #create instance of quit button
-quit_button = SimpleButton(window, 40, 550, 200, 20, "q- quit program", font)
+quit_button = pygwidgets.TextButton(window, (40, 550), "q- quit program", width=200, height=20)
 
 #create instances of vaccine buttons to toggle status
-vac_a_button = SimpleButton(window, 360, 80, 20, 20, None, font)
-vac_b_button = SimpleButton(window, 360, 100, 20, 20, None, font)
-vac_c_button = SimpleButton(window, 360, 120, 20, 20, None, font)
+vac_a_button = pygwidgets.TextButton(window, (360, 80), "", width=20, height=20)
+vac_b_button = pygwidgets.TextButton(window, (360, 100), "", width=20, height=20)
+vac_c_button = pygwidgets.TextButton(window, (360, 120), "", width=20, height=20)
 
 #create instances of symptom buttons to toggle status
-sympt_a_button = SimpleButton(window, 680, 80, 20, 20, None, font)
-sympt_b_button = SimpleButton(window, 680, 100, 20, 20, None, font)
-sympt_c_button = SimpleButton(window, 680, 120, 20, 20, None, font)
+sympt_a_button = pygwidgets.TextButton(window, (680, 80), "", width=20, height=20)
+sympt_b_button = pygwidgets.TextButton(window, (680, 100), "", width=20, height=20)
+sympt_c_button = pygwidgets.TextButton(window, (680, 120), "", width=20, height=20)
 
 
 #create instances of textboxes for input
@@ -225,87 +232,82 @@ while True:
                 v_active = not v_active  #show the textbox for -v key
             if event.key == pygame.K_r:
                 r_active = not r_active  # Toggle display of the r_input_box
-
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-
-            if vac_a_button.is_clicked(event.pos):      #toggle vaccine status using getters/setters
-                individual.set_vac_a(1 - individual.get_vac_a())  #flip between 0 and 1
-            if vac_b_button.is_clicked(event.pos):
-                individual.set_vac_b(1 - individual.get_vac_b())
-            if vac_c_button.is_clicked(event.pos):
-                individual.set_vac_c(1 - individual.get_vac_c())
-
-            if sympt_a_button.is_clicked(event.pos):    #toggle symptom status using getters/setters
-                individual.set_sympt_a(1 - individual.get_sympt_a())
-            if sympt_b_button.is_clicked(event.pos):
-                individual.set_sympt_b(1 - individual.get_sympt_b())
-            if sympt_c_button.is_clicked(event.pos):
-                individual.set_sympt_c(1 - individual.get_sympt_c())
-
-            if report_vacc_status_button.is_clicked(event.pos):
-                hide_other_fields() #makes other fields invisible
-                r_active = True     #makes textbox visible
-                r_output_surfaces = []  #clear input
-
-                try:
-                    num = int(r_input_box.get_text())
-                    if 1 <= num <= len(group.get_individuals()):
-                        indiv = group.get_individual(num - 1)
-                        r_output_text = indiv.report_individual_vacc()
-                        r_output_lines = r_output_text.split('\n')
-                        for line in r_output_lines:     #write to GUI
-                            surface = font.render(line, True, BLACK)
-                            r_output_surfaces.append(surface)
-                    else:
-                        r_output_surfaces = [font.render("Number inputted is out of range", True, RED)]
-                except ValueError:
-                    r_output_surfaces = [font.render("Click the button again to generate report of a valid individual.", True, RED)]
-
-            if report_vacc_total_button.is_clicked(event.pos):
-                report_vacc_status_lines = group.report_total_vacc()
-                hide_other_fields() #makes other fields invisible
-                report_vacc_status_surfaces = []
-                for line in report_vacc_status_lines:   #goes thru each elemetn in report_total_vacc list
-                    now_rendered = font.render(line, True, BLACK)
-                    report_vacc_status_surfaces.append(now_rendered)
-                report_vacc_status_is_visible = True  #sets it so text can be written later   
-
-            if report_sympt_button.is_clicked(event.pos):  
-                hide_other_fields() #makes other fields invisible  
-                report_sympt_lines = group.report_symptoms_per_vacc()
-                report_sympt_surfaces = []
-                for line in report_sympt_lines:
-                    line_surface = font.render(line, True, BLACK)
-                    report_sympt_surfaces.append(line_surface)
-                report_sympt_is_visible = True
-                
-            if reset_button.is_clicked(event.pos):
-                group.reset()
-
-            if quit_button.is_clicked(event.pos):   #q button quits the window
-                pygame.quit()
-                sys.exit()
+        #buttons to toggle vaccines
+        if vac_a_button.handleEvent(event):        #toggle vaccine status using getters/setters
+            individual.set_vac_a(1 - individual.get_vac_a())  #flip between 0 and 1
+        if vac_b_button.handleEvent(event):  
+            individual.set_vac_b(1 - individual.get_vac_b())
+        if vac_c_button.handleEvent(event):  
+            individual.set_vac_c(1 - individual.get_vac_c())
+        #buttons to toggle symptom
+        if sympt_a_button.handleEvent(event):      #toggle symptom status using getters/setters
+            individual.set_sympt_a(1 - individual.get_sympt_a())
+        if sympt_b_button.handleEvent(event):  
+            individual.set_sympt_b(1 - individual.get_sympt_b())
+        if sympt_c_button.handleEvent(event):  
+            individual.set_sympt_c(1 - individual.get_sympt_c())  
 
         #top line of GUI buttons
         if prev_button.handleEvent(event):   #go to previous individual, wraps around
-                current_index = (current_index - 1) % len(group.get_individuals())
-                individual = group.get_individual(current_index)
-                input_name.set_text(individual.get_name())
-                input_last_name.set_text(individual.get_last_name())
-                input_address.set_text(individual.get_address())
+            current_index = (current_index - 1) % len(group.get_individuals())
+            individual = group.get_individual(current_index)
+            button_handle() #refactored code into function to improve readability
 
         if next_button.handleEvent(event):   #go to next individual, wraps around
             current_index = (current_index + 1) % len(group.get_individuals())
             individual = group.get_individual(current_index)
-            input_name.set_text(individual.get_name())
-            input_last_name.set_text(individual.get_last_name())
-            input_address.set_text(individual.get_address())
+            button_handle()
 
         if save_button.handleEvent(event):   #save button saves input
-                save_data(individual)
+            save_data(individual)
 
         if add_button.handleEvent(event):    #add button adds a new indiviudal    
-                add_ind()
+            add_ind()
+
+        #left column of function buttons
+        if report_vacc_status_button.handleEvent(event):
+            hide_other_fields() #makes other fields invisible
+            r_active = True     #makes textbox visible
+            r_output_surfaces = []  #clear input
+
+            try:
+                num = int(r_input_box.get_text())
+                if 1 <= num <= len(group.get_individuals()):
+                    indiv = group.get_individual(num - 1)
+                    r_output_text = indiv.report_individual_vacc()
+                    r_output_lines = r_output_text.split('\n')
+                    for line in r_output_lines:     #write to GUI
+                        surface = font.render(line, True, BLACK)
+                        r_output_surfaces.append(surface)
+                else:
+                    r_output_surfaces = [font.render("Number inputted is out of range", True, RED)]
+            except ValueError:
+                r_output_surfaces = [font.render("Click the button again to generate report of a valid individual.", True, RED)]
+
+        if report_vacc_total_button.handleEvent(event):
+            report_vacc_status_lines = group.report_total_vacc()
+            hide_other_fields() #makes other fields invisible
+            report_vacc_status_surfaces = []
+            for line in report_vacc_status_lines:   #goes thru each elemetn in report_total_vacc list
+                now_rendered = font.render(line, True, BLACK)
+                report_vacc_status_surfaces.append(now_rendered)
+            report_vacc_status_is_visible = True  #sets it so text can be written later 
+
+        if report_sympt_button.handleEvent(event):  
+            hide_other_fields() #makes other fields invisible  
+            report_sympt_lines = group.report_symptoms_per_vacc()
+            report_sympt_surfaces = []
+            for line in report_sympt_lines:
+                line_surface = font.render(line, True, BLACK)
+                report_sympt_surfaces.append(line_surface)
+            report_sympt_is_visible = True
+
+        if reset_button.handleEvent(event):
+            group.reset()
+
+        if quit_button.handleEvent(event):   #q button quits the window
+            pygame.quit()
+            sys.exit()
 
         #handle events in boxes
         for box in input_boxes:
