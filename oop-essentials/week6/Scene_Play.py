@@ -1,5 +1,5 @@
+#Play scene
 import pygame
-import pygwidgets
 import pyghelpers
 from Constants import *
 import random

@@ -1,7 +1,6 @@
-import pygame
+#results screen scene
 import pygwidgets
 import pyghelpers
-import sys
 from Constants import *
 
 class Scene_Results(pyghelpers.Scene):

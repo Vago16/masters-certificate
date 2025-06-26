@@ -1,7 +1,6 @@
-import pygame
+#Main Menu Scene
 import pygwidgets
 import pyghelpers
-import sys
 from Constants import *
 
 class Scene_Main_Menu(pyghelpers.Scene):

@@ -1,7 +1,12 @@
+# Module 6 Assignment
+# Main file
+# Pong Game
+# Evagelos Petropoulos
+# U75564437
+
+
 import pygame
-import pygwidgets
 import pyghelpers
-import sys
 from Constants import *
 
 from Scene_Main_Menu import Scene_Main_Menu
@@ -13,7 +18,6 @@ pygame.init()
 pygame.font.init()
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 clock = pygame.time.Clock()  
-font = pygame.font.SysFont("None", 30)
 pygame.display.set_caption("Pong Game")
 
 #instantiate all scenes and store them into a list
