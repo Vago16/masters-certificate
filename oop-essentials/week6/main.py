@@ -17,26 +17,12 @@ font = pygame.font.SysFont("None", 30)
 pygame.display.set_caption("Pong Game")
 
 #instantiate all scenes and store them into a list
-scenesList = [Scene_Main_Menu(window),
-              Scene_Play(window),
-              Scene_Results(window)]
+scenesDict = {SCENE_MAIN_MENU : Scene_Main_Menu(window),
+              SCENE_PLAY: Scene_Play(window),
+              SCENE_RESULTS: Scene_Results(window)}
 
 #create the scene manager class and pass in the list of all the scenes to be run, along with frames per second
-oSceneManager = pyghelpers.SceneMgr(scenesList, FRAMES_PER_SECOND)
+oSceneManager = pyghelpers.SceneMgr(scenesDict, FRAMES_PER_SECOND)
 
 #tell the scene manager to start running
 oSceneManager.run()
-
-while True:
-    window.fill(BLACK)
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-
-    #Update the window
-    pygame.display.update()
-
-    #Slow things down a bit
-    clock.tick(FRAMES_PER_SECOND)  # make pygame wait
