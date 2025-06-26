@@ -3,8 +3,6 @@
 import pygame
 from pygame.locals import *
 
-NEXT_SCENE_EVENT = USEREVENT + 1
-
 #Scene keys
 SCENE_MAIN_MENU = "menu"
 SCENE_PLAY = "play"
