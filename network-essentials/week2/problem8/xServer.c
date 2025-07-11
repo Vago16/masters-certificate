@@ -88,7 +88,8 @@
 #endif
 
 //----- Defines ---------------------------------------------------------------
-#define  TCP_PORT   1050    // Arbitrary port number for the server
+#define  TCP_PORT   1050    // Arbitrary port number for the TCP server
+#define  UDP_PORT   1100    // Arbitrary port number for the UDP server
 
 //===== Main program ==========================================================
 int main()
@@ -96,6 +97,7 @@ int main()
 #ifdef WIN
   WORD wVersionRequested = MAKEWORD(1,1);       // Stuff for WSA functions
   WSADATA wsaData;                              // Stuff for WSA functions
+  
 #endif
   int                  welcome_s;       // Welcome socket descriptor
   struct sockaddr_in   server_addr;     // Server Internet address
@@ -107,14 +109,16 @@ int main()
   char                 in_buf[4096];    // Input buffer for data
   int                  retcode;         // Return code
 
+
+  int                  server_s;        // Server socket descriptor
+  
+
 #ifdef WIN
   // This stuff initializes winsock
   WSAStartup(wVersionRequested, &wsaData);
 #endif
 
-  // >>> Step #1 <<<
-  // Create a welcome socket
-  //   - AF_INET is Address Family Internet and SOCK_STREAM is streams
+  //Create UDP socket first//
   welcome_s = socket(AF_INET, SOCK_STREAM, 0);
   if (welcome_s < 0)
   {
@@ -219,28 +223,8 @@ int main()
 }
 
 
-#define  BSD                // WIN for Winsock and BSD for BSD sockets
 
-//----- Include files --------------------------------------------------------
-#include <stdio.h>          // Needed for printf()
-#include <string.h>         // Needed for memcpy() and strcpy()
-#include <stdlib.h>         // Needed for exit()
-#ifdef WIN
-  #include <windows.h>      // Needed for all Winsock stuff
-#endif
-#ifdef BSD
-  #include <sys/types.h>    // Needed for sockets stuff
-  #include <netinet/in.h>   // Needed for sockets stuff
-  #include <sys/socket.h>   // Needed for sockets stuff
-  #include <arpa/inet.h>    // Needed for sockets stuff
-  #include <fcntl.h>        // Needed for sockets stuff
-  #include <netdb.h>        // Needed for sockets stuff
-#endif
-
-//----- Defines --------------------------------------------------------------
-#define  UDP_PORT   1100    // Arbitrary port number for the server
-
-//===== Main program =========================================================
+//unfinished
 int main()
 {
 #ifdef WIN
