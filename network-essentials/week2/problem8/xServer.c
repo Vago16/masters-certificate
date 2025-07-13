@@ -89,15 +89,21 @@
 
 //----- Defines ---------------------------------------------------------------
 #define  TCP_PORT   1050    // Arbitrary port number for the TCP server
-#define  UDP_PORT   1100    // Arbitrary port number for the UDP server
+#define  UDP_PORT   1111    // Arbitrary port number for the UDP server
+
+//----- Prototype -------------------------------------------------------------
+int udpSocket();
 
 //===== Main program ==========================================================
 int main()
 {
+//do UDP first
+udpSocket();
+
+//start TCP
 #ifdef WIN
   WORD wVersionRequested = MAKEWORD(1,1);       // Stuff for WSA functions
   WSADATA wsaData;                              // Stuff for WSA functions
-  
 #endif
   int                  welcome_s;       // Welcome socket descriptor
   struct sockaddr_in   server_addr;     // Server Internet address
@@ -109,16 +115,14 @@ int main()
   char                 in_buf[4096];    // Input buffer for data
   int                  retcode;         // Return code
 
-
-  int                  server_s;        // Server socket descriptor
-  
-
 #ifdef WIN
   // This stuff initializes winsock
   WSAStartup(wVersionRequested, &wsaData);
 #endif
 
-  //Create UDP socket first//
+  // >>> Step #1 <<<
+  // Create a welcome socket
+  //   - AF_INET is Address Family Internet and SOCK_STREAM is streams
   welcome_s = socket(AF_INET, SOCK_STREAM, 0);
   if (welcome_s < 0)
   {
@@ -159,7 +163,7 @@ int main()
   memcpy(&client_ip_addr, &client_addr.sin_addr.s_addr, 4);
 
   // Print an informational message that accept completed
-  printf("Accept completed (IP address of client = %s  port = %d) \n",
+  printf("Accept Completed(IP address of client = %s  port = %d) \n",
     inet_ntoa(client_ip_addr), ntohs(client_addr.sin_port));
 
   // >>> Step #5 <<<
@@ -223,9 +227,8 @@ int main()
 }
 
 
-
-//unfinished
-int main()
+//===== Main program  for udp socket=========================================================
+int udpSocket()
 {
 #ifdef WIN
   WORD wVersionRequested = MAKEWORD(1,1);       // Stuff for WSA functions
@@ -283,12 +286,14 @@ int main()
   // Copy the four-byte client IP address into an IP address structure
   memcpy(&client_ip_addr, &client_addr.sin_addr.s_addr, 4);
 
+  printf("Received the knock message!!!\n");
+
   // Print an informational message of IP address and port of the client
-  printf("IP address of client = %s  port = %d) \n", inet_ntoa(client_ip_addr),
-    ntohs(client_addr.sin_port));
+  //printf("IP address of client = %s  port = %d) \n", inet_ntoa(client_ip_addr),
+    //ntohs(client_addr.sin_port));
 
   // Output the received message
-  printf("Received from client: %s \n", in_buf);
+  //printf("Received from client: %s \n", in_buf);
 
   // >>> Step #4 <<<
   // Send to the client using the server socket

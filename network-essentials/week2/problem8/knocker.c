@@ -91,7 +91,7 @@ int main()
   server_addr.sin_addr.s_addr = inet_addr(IP_ADDR); // IP address to use
 
   // Assign a message to buffer out_buf
-  strcpy(out_buf, "Test message from CLIENT to SERVER");
+  strcpy(out_buf, "This is a reply message from CLIENT to SERVER");
 
   // >>> Step #3 <<<
   // Now send the message to server.  The "+ 1" is for the end-of-string
@@ -116,7 +116,7 @@ int main()
   }
 
   // Output the received message
-  printf("Received from server:This is a message from SERVER to CLIENT");
+  printf("Received from server: This is a message from SERVER to CLIENT\n");
 
   // >>> Step #5 <<<
   // Close all open sockets
