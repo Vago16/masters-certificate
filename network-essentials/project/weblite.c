@@ -1,3 +1,4 @@
+//to be imported for use in weblite_knocker.c
 //====================================================== file = weblite.c =====
 //=  A super light-weight secure HTTP server                                  =
 //=   - Uses threads to allow for parallel connections                        =
@@ -80,10 +81,6 @@
 //----- Defines -------------------------------------------------------------
 #define  PORT_NUM            8080     // Port number for Web server
 #define  BUF_SIZE            4096     // Buffer size (big enough for a GET)
-#define  UDP_1_PORT          1100
-#define  UDP_1_PORT          1200
-#define  UDP_1_PORT          1300
-#define  IP_ADDR    "127.0.0.1"       // IP address
 
 //----- Function prototypes -------------------------------------------------
 #ifdef WIN
@@ -94,7 +91,7 @@
 #endif
 
 //===== Main program ========================================================
-void main()
+void run_server()
 {
 #ifdef WIN
   WORD wVersionRequested = MAKEWORD(1,1);  // Stuff for WSA functions
