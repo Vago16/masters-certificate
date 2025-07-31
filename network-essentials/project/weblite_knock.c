@@ -4,6 +4,7 @@
 #define  UDP_1_PORT          1100
 #define  UDP_2_PORT          1200
 #define  UDP_3_PORT          1300
+#define  UDP_4_PORT          1400     // extra credit port
 #define  KNOCK_TIMING        5        // max amount of seconds allowed between each knock
 #define  IP_ADDR    "127.0.0.1"       // IP address as defined in project specifications
 
@@ -18,7 +19,7 @@ int main() {
     return 0;
 }
 
-int wait_for_knock() {      //reusing code from xServer.c
+int wait_for_knock() {      //reusing code from xServer.c assignment
     int                  server_s;        // Server socket descriptor
     struct sockaddr_in   server_addr;     // Server Internet address
     struct sockaddr_in   client_addr;     // Client Internet address
