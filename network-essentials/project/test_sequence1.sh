@@ -22,4 +22,4 @@ sleep 2
 
 curl http://127.0.0.1:8080/test.html
 
-read -p "Press Enter to continue..."
+

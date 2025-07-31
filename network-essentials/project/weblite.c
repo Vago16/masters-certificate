@@ -139,7 +139,7 @@ void run_server()
   listen(server_s, 100);
 
   // Main loop to accept connections and then spin-off thread to handle the GET
-  printf(">>> weblite is running on port %d <<< \n", PORT_NUM);
+  printf(">>> weblite_knock is running on port %d <<< \n", PORT_NUM);
   while(1)
   {
     addr_len = sizeof(client_addr);

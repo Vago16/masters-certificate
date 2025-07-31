@@ -21,5 +21,3 @@ echo "Waiting for 0 seconds, press CTRL+C to quit ..."
 sleep 2
 
 curl http://127.0.0.1:8080/test.html
-
-read -p "Press Enter to continue..."
