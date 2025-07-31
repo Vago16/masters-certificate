@@ -1,4 +1,5 @@
 #include "weblite.c"        //for ease of readability, import code instead of putting it all in one file
+#include "time.h"
 
 #define  UDP_1_PORT          1100
 #define  UDP_2_PORT          1200
@@ -10,7 +11,9 @@ int wait_for_knock();      //prototype for knock function
 
 int main() {
     printf("Waiting for knock sequence...\n");
+    if (wait_for_knock) {
     run_server();
+    }
     return 0;
 }
 
@@ -59,5 +62,15 @@ int wait_for_knock() {      //reusing code from xServer.c
 
         //checking elapsed time
         time_t curr_time = time(NULL);      //initialize current time
+        if ((curr_knock > 0) && difftime(curr_time, last_knock_time)) {
+            printf("Timeout\n");
+            curr_knock = 0;
+        } else {
+            last_knock_time = curr_time;
+            curr_knock++;
+        }
+        close(server_s);
     }
+    printf("Correct Knock\n");
+    return 1;
 }
