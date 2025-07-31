@@ -12,7 +12,8 @@ int wait_for_knock();      //prototype for knock function
 int main() {
     printf("Waiting for knock sequence...\n");
     if (wait_for_knock()) {
-    run_server();
+        printf("Knock sequence received\n");
+        run_server();
     }
     return 0;
 }
@@ -50,12 +51,9 @@ int wait_for_knock() {      //reusing code from xServer.c
             }
 
         // Wait to receive a message from client
-        printf("Waiting for recvfrom() to complete... \n");
         addr_len = sizeof(client_addr);
-        printf("Current knock: %d (port %d)\n", curr_knock, knock_seq[curr_knock]);
         retcode = recvfrom(server_s, in_buf, sizeof(in_buf), 0,
             (struct sockaddr *)&client_addr, &addr_len);
-        printf("Knock received on port %d\n", knock_seq[curr_knock]);
         if (retcode < 0) {
             printf("*** ERROR - recvfrom() failed \n");
             close(server_s);       //deallocate memory location
@@ -73,6 +71,5 @@ int wait_for_knock() {      //reusing code from xServer.c
         }
         close(server_s);
     }
-    printf("Correct Knock\n");
     return 1;
 }
